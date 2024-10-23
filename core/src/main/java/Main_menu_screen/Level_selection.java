@@ -22,7 +22,7 @@ import angry.birds.game.Angry_ghosts;
 public class Level_selection implements Screen {
     private Angry_ghosts game;
     private OrthographicCamera camera;
-    private Viewport viewport;
+    private Viewport viewport;//gvgy
     private Stage stage;
     private Skin skin;
     private Texture background;

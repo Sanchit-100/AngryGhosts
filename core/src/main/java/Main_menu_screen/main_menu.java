@@ -32,6 +32,7 @@ public class main_menu implements Screen {
     private Texture exitButton;
     private Texture backgroundMenu;
     private Texture high_score;
+    private Texture logo1;
     private BitmapFont scoreFont;
     private GlyphLayout scoreLayout;
     private String highScoreText = "0";
@@ -58,7 +59,7 @@ public class main_menu implements Screen {
         backgroundMenu = new Texture("main menu screen.jpg");
         high_score = new Texture("highs1.png");
         profile_pic = new Texture("profile.png");
-
+        logo1 = new Texture("Angry_Birds_logos.jpg");
         // Create the camera and viewport
         camera = new OrthographicCamera();
         viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
@@ -120,6 +121,7 @@ public class main_menu implements Screen {
         ag.batch.draw(exitButton, xExit, worldHeight * 0.2f, buttonWidth, buttonHeight);
         ag.batch.draw(high_score, xHighS, worldHeight * 0.75f, 400, 250);
         ag.batch.draw(profile_pic, worldWidth -400f,worldHeight*0.75f,450,270);
+        ag.batch.draw(logo1,worldWidth/2f - 350f,worldHeight * 0.75f, 700,200);
 
         //scoreFont.setColor(1, 0, 0, 1); // Set color to red
         //scoreFont.draw(ag.batch, highScoreText, scoreX, scoreY);
@@ -176,5 +178,6 @@ public class main_menu implements Screen {
         high_score.dispose();
         scoreFont.dispose();
         profile_pic.dispose();
+        logo1.dispose();
     }
 }

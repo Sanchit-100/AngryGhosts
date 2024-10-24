@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 
 public class main_menu implements Screen {
 
@@ -22,12 +24,18 @@ public class main_menu implements Screen {
     private static final float EXIT_BUTTON_WIDTH_PERCENT = 0.2f;
     private static final float EXIT_BUTTON_HEIGHT_PERCENT = 0.1f;
 
+
     // Textures
     private Texture optionButton;
     private Texture playButton;
     private Texture continueButton;
     private Texture exitButton;
     private Texture backgroundMenu;
+    private Texture high_score;
+    private BitmapFont scoreFont;
+    private GlyphLayout scoreLayout;
+    private String highScoreText = "0";
+    private float scoreX, scoreY;
 
     // Core variables
     private Angry_ghosts ag;
@@ -35,7 +43,7 @@ public class main_menu implements Screen {
     private Viewport viewport;
 
     // Button positions and sizes
-    private float xPlay, xOption, xExit, xContinue;
+    private float xPlay, xOption, xExit, xContinue, xHighS;
     private float buttonWidth, buttonHeight;
 
     public main_menu(Angry_ghosts ag) {
@@ -47,17 +55,32 @@ public class main_menu implements Screen {
         continueButton = new Texture("download_2_-removebg-preview.png");
         exitButton = new Texture("download_3_-removebg-preview.png");
         backgroundMenu = new Texture("main menu screen.jpg");
+        high_score = new Texture("highs1.png");
 
         // Create the camera and viewport
         camera = new OrthographicCamera();
         viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
         camera.position.set(viewport.getWorldWidth() / 2f, viewport.getWorldHeight() / 2f, 0);
+
+        scoreFont = new BitmapFont(); // Use default font for now, can change to a custom .fnt file
+        scoreFont.setColor(1, 0, 0, 1); // Set initial color to red
+        scoreLayout = new GlyphLayout();
     }
 
     @Override
     public void show() {
         updateButtonPositions();
+        updateScorePosition();
     }
+    private void updateScorePosition() {
+        float worldHeight = viewport.getWorldHeight();
+        float worldWidth = viewport.getWorldWidth();
+
+        scoreLayout.setText(scoreFont, highScoreText);
+        scoreX = xHighS + 200 - scoreLayout.width / 2; // Center the text below the high score
+        scoreY = worldHeight * 0.75f - 20 - scoreLayout.height; // Adjust Y to be below the high score image
+    }
+
 
     private void updateButtonPositions() {
         float worldWidth = viewport.getWorldWidth();
@@ -70,6 +93,7 @@ public class main_menu implements Screen {
         xOption = worldWidth / 2f - buttonWidth / 2f;
         xExit = worldWidth / 2f - buttonWidth / 2f;
         xContinue = worldWidth / 2f - buttonWidth / 2f;
+        xHighS = 10;
     }
 
     @Override
@@ -90,6 +114,10 @@ public class main_menu implements Screen {
         ag.batch.draw(optionButton, xOption, worldHeight * 0.35f, buttonWidth, buttonHeight);
         ag.batch.draw(continueButton, xContinue, worldHeight * 0.65f, buttonWidth, buttonHeight);
         ag.batch.draw(exitButton, xExit, worldHeight * 0.2f, buttonWidth, buttonHeight);
+        ag.batch.draw(high_score, xHighS, worldHeight * 0.75f, 400, 250);
+
+        //scoreFont.setColor(1, 0, 0, 1); // Set color to red
+        //scoreFont.draw(ag.batch, highScoreText, scoreX, scoreY);
 
         ag.batch.end();
 
@@ -140,5 +168,7 @@ public class main_menu implements Screen {
         continueButton.dispose();
         exitButton.dispose();
         backgroundMenu.dispose();
+        high_score.dispose();
+        scoreFont.dispose();
     }
 }

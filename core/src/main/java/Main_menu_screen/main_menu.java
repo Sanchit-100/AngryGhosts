@@ -38,6 +38,7 @@ public class main_menu implements Screen {
     private String highScoreText = "0";
     private float scoreX, scoreY;
     private Texture profile_pic;
+    private Texture deadh;
 
     // Core variables
     private Angry_ghosts ag;
@@ -60,6 +61,7 @@ public class main_menu implements Screen {
         high_score = new Texture("highs1.png");
         profile_pic = new Texture("profile.png");
         logo1 = new Texture("Angry_Birds_logos.jpg");
+        deadh = new Texture("deadhour.png");
         // Create the camera and viewport
         camera = new OrthographicCamera();
         viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
@@ -122,6 +124,7 @@ public class main_menu implements Screen {
         ag.batch.draw(high_score, xHighS, worldHeight * 0.75f, 400, 250);
         ag.batch.draw(profile_pic, worldWidth -400f,worldHeight*0.75f,450,270);
         ag.batch.draw(logo1,worldWidth/2f - 350f,worldHeight * 0.75f, 700,200);
+        ag.batch.draw(deadh,worldWidth/2f - 450f,worldHeight*0.005f,900,270);
 
         //scoreFont.setColor(1, 0, 0, 1); // Set color to red
         //scoreFont.draw(ag.batch, highScoreText, scoreX, scoreY);
@@ -144,6 +147,10 @@ public class main_menu implements Screen {
                 // ag.setScreen(new Game_screen());
             } else if (isButtonClicked(touch, xExit, worldHeight * 0.2f)) {
                 Gdx.app.exit();
+            }
+            else if(isButtonClicked(touch, worldWidth -400f,worldHeight*0.75f)){
+                this.dispose();
+                ag.setScreen(new profile_menu(ag));
             }
         }
     }
@@ -179,5 +186,6 @@ public class main_menu implements Screen {
         scoreFont.dispose();
         profile_pic.dispose();
         logo1.dispose();
+        deadh.dispose();
     }
 }

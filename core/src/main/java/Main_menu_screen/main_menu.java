@@ -36,6 +36,7 @@ public class main_menu implements Screen {
     private GlyphLayout scoreLayout;
     private String highScoreText = "0";
     private float scoreX, scoreY;
+    private Texture profile_pic;
 
     // Core variables
     private Angry_ghosts ag;
@@ -56,6 +57,7 @@ public class main_menu implements Screen {
         exitButton = new Texture("download_3_-removebg-preview.png");
         backgroundMenu = new Texture("main menu screen.jpg");
         high_score = new Texture("highs1.png");
+        profile_pic = new Texture("profile.png");
 
         // Create the camera and viewport
         camera = new OrthographicCamera();
@@ -104,6 +106,8 @@ public class main_menu implements Screen {
         ag.batch.setProjectionMatrix(camera.combined);
 
         ag.batch.begin();
+        float worldWidth = viewport.getWorldWidth();
+        //float worldHeight = viewport.getWorldHeight();
 
         // Draw the background
         ag.batch.draw(backgroundMenu, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
@@ -115,6 +119,7 @@ public class main_menu implements Screen {
         ag.batch.draw(continueButton, xContinue, worldHeight * 0.65f, buttonWidth, buttonHeight);
         ag.batch.draw(exitButton, xExit, worldHeight * 0.2f, buttonWidth, buttonHeight);
         ag.batch.draw(high_score, xHighS, worldHeight * 0.75f, 400, 250);
+        ag.batch.draw(profile_pic, worldWidth -400f,worldHeight*0.75f,450,270);
 
         //scoreFont.setColor(1, 0, 0, 1); // Set color to red
         //scoreFont.draw(ag.batch, highScoreText, scoreX, scoreY);
@@ -170,5 +175,6 @@ public class main_menu implements Screen {
         backgroundMenu.dispose();
         high_score.dispose();
         scoreFont.dispose();
+        profile_pic.dispose();
     }
 }

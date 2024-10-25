@@ -21,6 +21,8 @@ public class profile_menu implements Screen {
     private Viewport viewport;
     private Texture back_button;
     private Texture player_name;
+    private Texture stars;
+    private Texture silver_text;
 
     // Position and size for back button
     private float backButtonX, backButtonY, backButtonWidth, backButtonHeight;
@@ -31,10 +33,12 @@ public class profile_menu implements Screen {
         // Load textures
         main_bg = new Texture("profilebg.png");
         second_bg = new Texture("main_rectangle12.png");
-        Stars = new Texture("stars.jpg");
+       // Stars = new Texture("stars.jpg");
         back_button = new Texture("left-arrow.png");
         User_profile = new Texture("actual_profile.png");
         player_name = new Texture ("playern.png");
+        stars = new Texture("sl.png");
+        silver_text = new Texture("silver_text.png");
 
         // Set up the camera and viewport
         camera = new OrthographicCamera();
@@ -67,9 +71,10 @@ public class profile_menu implements Screen {
         ag.batch.draw(second_bg, worldWidth / 2f - 500f, worldHeight * 0.15f, 1000f, 800f);
         ag.batch.draw(back_button, backButtonX, backButtonY, backButtonWidth, backButtonHeight);
         ag.batch.draw(User_profile,worldWidth/2f - 500f , worldHeight*0.5f, 400f,400f );
-        ag.batch.draw(player_name, worldWidth/2f - 1050f, worldHeight - 1200f, 2500f,1800f);
+        ag.batch.draw(player_name, worldWidth/2f - 1050f, worldHeight - 1150f, 2500f,1800f);
+        ag.batch.draw(stars, worldWidth/2f - 100f,worldHeight - 500f, 200f,200f);
+        ag.batch.draw(silver_text, worldWidth/2f - 280f,worldHeight - 800f, 900f,1000f);
 
-        ag.batch.end();
 
         // Check if the back button is clicked
         if (Gdx.input.justTouched()) {
@@ -82,6 +87,7 @@ public class profile_menu implements Screen {
                 ag.setScreen(new main_menu(ag)); // Assuming `main_menu` is the previous screen
             }
         }
+        ag.batch.end();
     }
 
 
@@ -111,5 +117,7 @@ public class profile_menu implements Screen {
         back_button.dispose();
         User_profile.dispose();
         player_name.dispose();
+        stars.dispose();
+        silver_text.dispose();
     }
 }

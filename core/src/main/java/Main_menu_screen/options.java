@@ -25,6 +25,7 @@ public class options implements Screen {
     private Texture setting_text;
     private Texture sound;
     private Texture sliding_bar;
+    private Texture sliding_bar1;
 
     // Position and size for back button
     private float backButtonX, backButtonY, backButtonWidth, backButtonHeight;
@@ -43,6 +44,7 @@ public class options implements Screen {
         setting_text = new Texture("setting_text.png");
         sound = new Texture("volume.png");
         sliding_bar = new Texture("bar_slipping.png");
+        sliding_bar1 = new Texture("bar_slipping.png");
 
         // Set up the camera and viewport
         camera = new OrthographicCamera();
@@ -79,7 +81,8 @@ public class options implements Screen {
         ag.batch.draw(brightness, worldWidth/2f - 470f,worldHeight - 600f, 200f,200f);
         ag.batch.draw(setting_text, worldWidth/2f - 350f,worldHeight - 350f, 900f,150f);
         ag.batch.draw(sound,worldWidth/2f -450f,worldHeight - 800f, 150f,150f);
-        ag.batch.draw(sliding_bar,worldWidth/2f + 100f,worldHeight -750f, 100f,200f);
+        ag.batch.draw(sliding_bar,worldWidth/2f - 280f,worldHeight -550f, 600f,100f);
+        ag.batch.draw(sliding_bar1,worldWidth/2f - 280f,worldHeight -750f, 600f,100f);
 
 
         // Check if the back button is clicked
@@ -127,5 +130,6 @@ public class options implements Screen {
         setting_text.dispose();
         sound.dispose();
         sliding_bar.dispose();
+        sliding_bar1.dispose();
     }
 }

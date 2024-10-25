@@ -45,12 +45,12 @@ public class Story_screen implements Screen {
 
         introText = "It was a time of great unrest in the vibrant world of the Angry Birds. The peace that had reigned over Bird Island was shattered" +"\n"+"once more by the nefarious Pig Empire, who had once again stolen the precious eggs of the birds, bringing devastation to their peaceful lives.\n" +
             "\n" +
-            "The birds, led by the fierce Red and his brave companions, fought valiantly against the Pig Empire, but they suffered a devastating loss—their" +"\n"+"young ones, the innocent hatchlings, were cruelly taken by the pigs, leaving their parents heartbroken and filled with rage.\n" +
+            "The birds, led by the fierce Red and his brave companions, fought valiantly against the Pig Empire, but they suffered a devastating loss—their young ones"+"\n"+", the innocent hatchlings, were cruelly taken by the pigs, leaving their parents heartbroken and filled with rage.\n" +
             "The Resurrection\n" +
             "\n" +
-            "In a dark corner of the island, a forgotten graveyard lay hidden beneath the ancient trees. Here, the spirits of the fallen hatchlings lingered,"+"\n"+" trapped between worlds, their cries echoing through the night. But on the eve of the Harvest Moon, an ancient magic awoke, \n"+"and the spirits were drawn together. With the combined power of their love for their parents and the desire for vengeance, the hatchlings were resurrected.\n" +
+            "In a dark corner of the island, a forgotten graveyard lay hidden beneath the ancient trees. Here, the spirits of the fallen hatchlings lingered,"+"\n"+" trapped between worlds, their cries echoing through the night. But on the eve of the Harvest Moon, an ancient magic awoke, \n"+"and the spirits were drawn together. With desire for vengeance, the hatchlings were resurrected.\n" +
             "\n" +
-            "As the dawn broke, the once-innocent hatchlings emerged from the earth, transformed by the energies of the grave. No longer mere chicks, they were now"+"\n"+" fierce avengers, clad in spectral armor and armed with the wisdom of their fallen kin. Their mission was clear: reclaim their stolen eggs and restore peace to Bird Island.";
+            "As the dawn broke, the once-innocent hatchlings emerged from the earth, transformed by the energies of the grave. No longer mere chicks, they were now"+"\n"+" Undead Savages, clad in spectral mana and armed with the wisdom of their fallen kin. Their mission was clear: avenge their deaths and restore peace to Bird Island.";
 
         textY = -200; // Start the text below the screen
 

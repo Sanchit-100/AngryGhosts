@@ -147,7 +147,7 @@ public class main_menu implements Screen {
                 ag.setScreen(new options(ag));
             } else if (isButtonClicked(touch, xContinue, worldHeight * 0.65f)) {
                 this.dispose();
-                // ag.setScreen(new Game_screen());
+                ag.setScreen(new level_1(ag));
             } else if (isButtonClicked(touch, xExit, worldHeight * 0.2f)) {
                 Gdx.app.exit();
             }

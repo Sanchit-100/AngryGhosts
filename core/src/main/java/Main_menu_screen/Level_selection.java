@@ -27,12 +27,14 @@ public class Level_selection implements Screen {
     private Skin skin;
     private Texture background;
     private Texture backButtonTexture;
+    private Texture select_level;
 
     public Level_selection(final Angry_ghosts game) {
         this.game = game;
         camera = new OrthographicCamera();
         viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
         stage = new Stage(viewport, game.batch);
+        select_level= new Texture("select_level.png");
 
         // Load the background image
         background = new Texture(Gdx.files.internal("spooky_bg.jpg"));
@@ -76,7 +78,7 @@ public class Level_selection implements Screen {
         }
 
         // Add back button as a smaller image
-        float scaleFactor = 0.5f; // Adjust this value to make the button smaller or larger
+        float scaleFactor = 0.4f; // Adjust this value to make the button smaller or larger
         TextureRegion backButtonRegion = new TextureRegion(backButtonTexture);
         TextureRegionDrawable backButtonDrawable = new TextureRegionDrawable(backButtonRegion);
         backButtonDrawable.setMinWidth(backButtonTexture.getWidth() * scaleFactor);
@@ -121,6 +123,7 @@ public class Level_selection implements Screen {
         // Draw the background
         game.batch.begin();
         game.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        game.batch.draw(select_level, Gdx.graphics.getWidth()/2f - 400f, Gdx.graphics.getHeight() *0.73f,800f, 300f);
         game.batch.end();
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));

@@ -59,7 +59,7 @@ public class main_menu implements Screen {
         exitButton = new Texture("download_3_-removebg-preview.png");
         backgroundMenu = new Texture("main menu screen.jpg");
         high_score = new Texture("highs1.png");
-        profile_pic = new Texture("profile.png");
+        profile_pic = new Texture("actual_profile.png");
         logo1 = new Texture("Angry_Birds_logos.jpg");
         deadh = new Texture("deadhour.png");
         // Create the camera and viewport
@@ -122,7 +122,7 @@ public class main_menu implements Screen {
         ag.batch.draw(continueButton, xContinue, worldHeight * 0.65f, buttonWidth, buttonHeight);
         ag.batch.draw(exitButton, xExit, worldHeight * 0.2f, buttonWidth, buttonHeight);
         ag.batch.draw(high_score, xHighS, worldHeight * 0.75f, 400, 250);
-        ag.batch.draw(profile_pic, worldWidth -400f,worldHeight*0.75f,450,270);
+        ag.batch.draw(profile_pic, worldWidth -450f,worldHeight*0.735f,450,270);
         ag.batch.draw(logo1,worldWidth/2f - 350f,worldHeight * 0.75f, 700,200);
         ag.batch.draw(deadh,worldWidth/2f - 450f,worldHeight*0.005f,900,270);
 

@@ -144,7 +144,7 @@ public class main_menu implements Screen {
                 ag.setScreen(new Level_selection(ag));
             } else if (isButtonClicked(touch, xOption, worldHeight * 0.35f)) {
                 this.dispose();
-                // ag.setScreen(new setting_menu());
+                ag.setScreen(new options(ag));
             } else if (isButtonClicked(touch, xContinue, worldHeight * 0.65f)) {
                 this.dispose();
                 // ag.setScreen(new Game_screen());

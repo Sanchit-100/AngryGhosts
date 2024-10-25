@@ -23,6 +23,8 @@ public class profile_menu implements Screen {
     private Texture player_name;
     private Texture stars;
     private Texture silver_text;
+    private Texture friends;
+    private Texture friend_no;
 
     // Position and size for back button
     private float backButtonX, backButtonY, backButtonWidth, backButtonHeight;
@@ -39,6 +41,8 @@ public class profile_menu implements Screen {
         player_name = new Texture ("playern.png");
         stars = new Texture("sl.png");
         silver_text = new Texture("silver_text.png");
+        friends = new Texture("friend_1.png");
+        friend_no = new Texture("friendno.jpg");
 
         // Set up the camera and viewport
         camera = new OrthographicCamera();
@@ -74,6 +78,8 @@ public class profile_menu implements Screen {
         ag.batch.draw(player_name, worldWidth/2f - 1050f, worldHeight - 1150f, 2500f,1800f);
         ag.batch.draw(stars, worldWidth/2f - 100f,worldHeight - 500f, 200f,200f);
         ag.batch.draw(silver_text, worldWidth/2f - 280f,worldHeight - 800f, 900f,1000f);
+        ag.batch.draw(friends,worldWidth/2f - 675f,worldHeight - 1200f, 900f,1000f);
+        ag.batch.draw(friend_no,worldWidth/2f + 100f,worldHeight -750f, 100f,200f);
 
 
         // Check if the back button is clicked
@@ -119,5 +125,7 @@ public class profile_menu implements Screen {
         player_name.dispose();
         stars.dispose();
         silver_text.dispose();
+        friends.dispose();
+        friend_no.dispose();
     }
 }

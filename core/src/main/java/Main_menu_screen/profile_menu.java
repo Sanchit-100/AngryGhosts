@@ -79,7 +79,7 @@ public class profile_menu implements Screen {
         ag.batch.draw(stars, worldWidth/2f - 100f,worldHeight - 500f, 200f,200f);
         ag.batch.draw(silver_text, worldWidth/2f - 280f,worldHeight - 800f, 900f,1000f);
         ag.batch.draw(friends,worldWidth/2f - 675f,worldHeight - 1200f, 900f,1000f);
-        ag.batch.draw(friend_no,worldWidth/2f + 100f,worldHeight -750f, 100f,200f);
+        ag.batch.draw(friend_no,worldWidth/2f + 10f,worldHeight -750f, 100f,200f);
 
 
         // Check if the back button is clicked

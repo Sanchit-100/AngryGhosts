@@ -16,15 +16,15 @@ public class options implements Screen {
     private Texture main_bg;
     private Texture second_bg;
     private Texture Stars;
-    private Texture User_profile;
+    private Texture settings;
     private OrthographicCamera camera;
     private Viewport viewport;
     private Texture back_button;
     private Texture player_name;
-    private Texture stars;
-    private Texture silver_text;
-    private Texture friends;
-    private Texture friend_no;
+    private Texture brightness;
+    private Texture setting_text;
+    private Texture sound;
+    private Texture sliding_bar;
 
     // Position and size for back button
     private float backButtonX, backButtonY, backButtonWidth, backButtonHeight;
@@ -37,12 +37,12 @@ public class options implements Screen {
         second_bg = new Texture("main_rectangle12.png");
         // Stars = new Texture("stars.jpg");
         back_button = new Texture("left-arrow.png");
-        User_profile = new Texture("actual_profile.png");
-        player_name = new Texture ("playern.png");
-        stars = new Texture("sl.png");
-        silver_text = new Texture("silver_text.png");
-        friends = new Texture("friend_1.png");
-        friend_no = new Texture("friendno.jpg");
+        settings = new Texture("gear.png");
+        //player_name = new Texture ("playern.png");
+        brightness = new Texture("brightness.png");
+        setting_text = new Texture("setting_text.png");
+        sound = new Texture("volume.png");
+        sliding_bar = new Texture("bar_slipping.png");
 
         // Set up the camera and viewport
         camera = new OrthographicCamera();
@@ -74,12 +74,12 @@ public class options implements Screen {
         ag.batch.draw(main_bg, 0, 0, worldWidth, worldHeight);
         ag.batch.draw(second_bg, worldWidth / 2f - 500f, worldHeight * 0.15f, 1000f, 800f);
         ag.batch.draw(back_button, backButtonX, backButtonY, backButtonWidth, backButtonHeight);
-        ag.batch.draw(User_profile,worldWidth/2f - 500f , worldHeight*0.5f, 400f,400f );
-        ag.batch.draw(player_name, worldWidth/2f - 1050f, worldHeight - 1150f, 2500f,1800f);
-        ag.batch.draw(stars, worldWidth/2f - 100f,worldHeight - 500f, 200f,200f);
-        ag.batch.draw(silver_text, worldWidth/2f - 280f,worldHeight - 800f, 900f,1000f);
-        ag.batch.draw(friends,worldWidth/2f - 675f,worldHeight - 1200f, 900f,1000f);
-        ag.batch.draw(friend_no,worldWidth/2f + 100f,worldHeight -750f, 100f,200f);
+        ag.batch.draw(settings,worldWidth/2f - 480f , worldHeight*0.65f, 200f,200f );
+        //ag.batch.draw(player_name, worldWidth/2f - 1050f, worldHeight - 1150f, 2500f,1800f);
+        ag.batch.draw(brightness, worldWidth/2f - 470f,worldHeight - 600f, 200f,200f);
+        ag.batch.draw(setting_text, worldWidth/2f - 350f,worldHeight - 350f, 900f,150f);
+        ag.batch.draw(sound,worldWidth/2f -450f,worldHeight - 800f, 150f,150f);
+        ag.batch.draw(sliding_bar,worldWidth/2f + 100f,worldHeight -750f, 100f,200f);
 
 
         // Check if the back button is clicked
@@ -121,11 +121,11 @@ public class options implements Screen {
         main_bg.dispose();
         second_bg.dispose();
         back_button.dispose();
-        User_profile.dispose();
-        player_name.dispose();
-        stars.dispose();
-        silver_text.dispose();
-        friends.dispose();
-        friend_no.dispose();
+        settings.dispose();
+        //player_name.dispose();
+        brightness.dispose();
+        setting_text.dispose();
+        sound.dispose();
+        sliding_bar.dispose();
     }
 }

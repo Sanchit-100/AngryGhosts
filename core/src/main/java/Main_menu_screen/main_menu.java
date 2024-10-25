@@ -134,7 +134,10 @@ public class main_menu implements Screen {
         // Handle input
         if (Gdx.input.justTouched()) {
             Vector3 touch = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+
             viewport.unproject(touch);
+            Vector3 touch1 = new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
+            viewport.unproject(touch1);
 
             if (isButtonClicked(touch, xPlay, worldHeight * 0.5f)) {
                 this.dispose();
@@ -148,7 +151,7 @@ public class main_menu implements Screen {
             } else if (isButtonClicked(touch, xExit, worldHeight * 0.2f)) {
                 Gdx.app.exit();
             }
-            else if(isButtonClicked(touch, worldWidth -400f,worldHeight*0.75f)){
+            else if(isProfileClicked(touch, worldWidth -400f,worldHeight*0.75f)){
                 this.dispose();
                 ag.setScreen(new profile_menu(ag));
             }
@@ -157,6 +160,9 @@ public class main_menu implements Screen {
 
     private boolean isButtonClicked(Vector3 touch, float x, float y) {
         return touch.x >= x && touch.x <= x + buttonWidth && touch.y >= y && touch.y <= y + buttonHeight;
+    }
+    private boolean isProfileClicked(Vector3 touch1, float x, float y){
+        return touch1.x >= x && touch1.x <= x + 450f && touch1.y >= y && touch1.y <= y + 270;
     }
 
     @Override

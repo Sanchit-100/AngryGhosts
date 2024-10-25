@@ -16,9 +16,11 @@ public class profile_menu implements Screen {
     private Texture main_bg;
     private Texture second_bg;
     private Texture Stars;
+    private Texture User_profile;
     private OrthographicCamera camera;
     private Viewport viewport;
     private Texture back_button;
+    private Texture player_name;
 
     // Position and size for back button
     private float backButtonX, backButtonY, backButtonWidth, backButtonHeight;
@@ -31,6 +33,8 @@ public class profile_menu implements Screen {
         second_bg = new Texture("main_rectangle12.png");
         Stars = new Texture("stars.jpg");
         back_button = new Texture("left-arrow.png");
+        User_profile = new Texture("actual_profile.png");
+        player_name = new Texture ("playern.png");
 
         // Set up the camera and viewport
         camera = new OrthographicCamera();
@@ -62,6 +66,8 @@ public class profile_menu implements Screen {
         ag.batch.draw(main_bg, 0, 0, worldWidth, worldHeight);
         ag.batch.draw(second_bg, worldWidth / 2f - 500f, worldHeight * 0.15f, 1000f, 800f);
         ag.batch.draw(back_button, backButtonX, backButtonY, backButtonWidth, backButtonHeight);
+        ag.batch.draw(User_profile,worldWidth/2f - 500f , worldHeight*0.5f, 400f,400f );
+        ag.batch.draw(player_name, worldWidth/2f - 1050f, worldHeight - 1200f, 2500f,1800f);
 
         ag.batch.end();
 
@@ -103,5 +109,7 @@ public class profile_menu implements Screen {
         main_bg.dispose();
         second_bg.dispose();
         back_button.dispose();
+        User_profile.dispose();
+        player_name.dispose();
     }
 }

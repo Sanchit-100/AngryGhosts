@@ -70,7 +70,7 @@ public class Story_screen implements Screen {
     private void createButtons() {
         float buttonScale = 0.2f; // Reduced from 0.5f to make buttons smaller
 
-        // Back button
+
         TextureRegion backRegion = new TextureRegion(backButtonTexture);
         TextureRegionDrawable backDrawable = new TextureRegionDrawable(backRegion);
         backDrawable.setMinWidth(backButtonTexture.getWidth() * buttonScale);
@@ -81,11 +81,11 @@ public class Story_screen implements Screen {
         backButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new Level_selection(game)); // Replace with your actual main menu screen
+                game.setScreen(new Level_selection(game));
             }
         });
 
-        // Skip button
+
         TextureRegion skipRegion = new TextureRegion(skipButtonTexture);
         TextureRegionDrawable skipDrawable = new TextureRegionDrawable(skipRegion);
         skipDrawable.setMinWidth(skipButtonTexture.getWidth() * buttonScale);
@@ -97,7 +97,7 @@ public class Story_screen implements Screen {
         skipButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                //game.setScreen(//something here); // Replace with your actual game screen
+               // game.setScreen(//something here); // Replace with your actual game screen
             }
         });
 

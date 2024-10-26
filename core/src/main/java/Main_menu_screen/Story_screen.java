@@ -97,7 +97,7 @@ public class Story_screen implements Screen {
         skipButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-               // game.setScreen(//something here); // Replace with your actual game screen
+                game.setScreen(new level_1(game)); // Replace with your actual game screen
             }
         });
 

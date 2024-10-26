@@ -22,6 +22,7 @@ public class level_1 implements Screen {
     private Texture woodenBlock;
     private Texture winButton;
     private Texture loseButton;
+    private Texture pauseButton;
 
     private Angry_ghosts ag;
     private OrthographicCamera camera;
@@ -42,6 +43,7 @@ public class level_1 implements Screen {
         pigSprites[0] = new Texture("Assets/pig1.png");
         pigSprites[1] = new Texture("Assets/pig1.png");
         pigSprites[2] = new Texture("Assets/pig1.png");
+        pauseButton = new Texture("Assets/pause.png");
         glassBlock = new Texture("Assets/glass_block.png");
         woodenBlock = new Texture("Assets/wooden_block.png");
         winButton = new Texture("Assets/win_icon.png");
@@ -81,24 +83,44 @@ public class level_1 implements Screen {
         ag.batch.draw(backgroundImage, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
 
         // Draw the slingshot
-        ag.batch.draw(slingshotImage, 150, 150, 150, 250);
+        ag.batch.draw(slingshotImage, 250, 150, 150, 250);
+
 
         // Draw the ghost sprites beside the slingshot
         for (int i = 0; i < ghostSprites.length; i++) {
-            ag.batch.draw(ghostSprites[i], 150 + i * 50, 50, 120, 120);
+            ag.batch.draw(ghostSprites[i], 10 + i * 100, 130, 120, 120);
         }
 
         // Draw the pigs on blocks
-//        ag.batch.draw(glassBlock, 400, 100, 100, 150);
-        ag.batch.draw(pigSprites[0], 420, 130, 120, 120);
-        // ag.batch.draw(woodenBlock, 550, 100, 100, 150);
-        ag.batch.draw(pigSprites[1], 570, 130, 120, 120);
-        // ag.batch.draw(glassBlock, 700, 100, 100, 150);
-        ag.batch.draw(pigSprites[2], 720, 130, 120, 120);
+        ag.batch.draw(glassBlock, 1420, 130, 150, 90);
+        ag.batch.draw(pigSprites[0], 1420, 190, 120, 120);
+
+        ag.batch.draw(woodenBlock, 1535, 135, 150, 70);
+        ag.batch.draw(pigSprites[0], 1550, 190, 120, 120);
+
+        ag.batch.draw(glassBlock, 1420, 480, 150, 90);
+        ag.batch.draw(pigSprites[0], 1420, 540, 120, 120);
+
+        ag.batch.draw(woodenBlock, 1535, 485, 150, 70);
+        ag.batch.draw(pigSprites[0], 1550, 540, 120, 120);
+
+        ag.batch.draw(glassBlock, 1420, 880, 150, 90);
+        ag.batch.draw(pigSprites[0], 1420, 940, 120, 120);
+
+        ag.batch.draw(woodenBlock, 1535, 885, 150, 70);
+        ag.batch.draw(pigSprites[0], 1550, 940, 120, 120);
+
+
+//        ag.batch.draw(woodenBlock, 550, 100, 100, 150);
+//        ag.batch.draw(pigSprites[1], 570, 130, 120, 120);
+//
+//        ag.batch.draw(glassBlock, 700, 100, 100, 150);
+//        ag.batch.draw(pigSprites[2], 720, 130, 120, 120);
 
         // Draw the buttons at the bottom right
         ag.batch.draw(winButton, xWin, 50, buttonWidth, buttonHeight);
         ag.batch.draw(loseButton, xLose, 50, buttonWidth, buttonHeight);
+        ag.batch.draw(pauseButton, worldWidth*0.05f,worldHeight*0.9f,buttonWidth,buttonHeight);
 
         ag.batch.end();
 
@@ -112,6 +134,10 @@ public class level_1 implements Screen {
             } else if (isButtonClicked(touch, xLose, 50)) {
                 this.dispose();
                 ag.setScreen(new lose_screen(ag,10000));
+            }
+            else if (isButtonClicked(touch, worldWidth*0.05f,worldHeight*0.9f)) {
+                this.dispose();
+                ag.setScreen(new PauseScreen(ag));
             }
         }
     }

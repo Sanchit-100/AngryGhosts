@@ -11,7 +11,7 @@ Win/Loss Simulation: For testing purposes, you can manually simulate a win or lo
 
 ## How to Run the Game
 
-To get started with Angry Birds Ghosts, follow these steps:
+To get started with Angry Birds Dead Hour, follow these steps:
 
 Ensure you have LWJGL (Lightweight Java Game Library) 3 installed, as it’s required to run the game.
 

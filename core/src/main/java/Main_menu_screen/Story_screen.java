@@ -3,6 +3,7 @@ package Main_menu_screen;
 import angry.birds.game.Angry_ghosts;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -31,6 +32,8 @@ public class Story_screen implements Screen {
     private Texture skipButtonTexture;
     private Texture backgroundTexture;
     private TextureRegion backgroundRegion;
+    private Music introMusic;
+    private Music bgmusic;
 
     public Story_screen(final Angry_ghosts game) {
         this.game = game;
@@ -60,7 +63,8 @@ public class Story_screen implements Screen {
         //backgroundTexture = new Texture(Gdx.files.internal("dark_img.png"));
         backgroundTexture = new Texture(Gdx.files.internal("dark_img.png"));
         backgroundRegion = new TextureRegion(backgroundTexture);
-
+        introMusic = Gdx.audio.newMusic(Gdx.files.internal("spooky_voiceover.wav"));
+        bgmusic = Gdx.audio.newMusic(Gdx.files.internal("spooky_music1.mp3"));
         // Create and position buttons
         createButtons();
 
@@ -105,6 +109,27 @@ public class Story_screen implements Screen {
         stage.addActor(skipButton);
     }
 
+    @Override
+    public void show() {
+        Gdx.input.setInputProcessor(stage);
+        if (introMusic != null) {
+            introMusic.setVolume(1f);
+            introMusic.play();
+            introMusic.setOnCompletionListener(new Music.OnCompletionListener() {
+                @Override
+                public void onCompletion(Music music) {
+                    game.setScreen(new level_1(game)); // Replace with your actual next screen
+                }
+            });
+        }
+
+
+        if (bgmusic!=null) {
+            bgmusic.setVolume(0.1f);
+            bgmusic.setLooping(true);
+            bgmusic.play();
+        }
+    }
 
     @Override
     public void render(float delta) {
@@ -147,13 +172,17 @@ public class Story_screen implements Screen {
         camera.update();
     }
 
-    @Override
-    public void show() {
-        Gdx.input.setInputProcessor(stage);
-    }
+
 
     @Override
-    public void hide() {}
+    public void hide() {
+        if (introMusic != null) {
+            introMusic.stop();
+        }
+        if (bgmusic != null) {
+            bgmusic.stop();
+        }
+    }
 
     @Override
     public void pause() {}
@@ -168,5 +197,11 @@ public class Story_screen implements Screen {
         backButtonTexture.dispose();
         skipButtonTexture.dispose();
         backgroundTexture.dispose();
+        if (introMusic != null) {
+            introMusic.dispose();
+        }
+        if (bgmusic != null) {
+            bgmusic.dispose();
+        }
     }
 }

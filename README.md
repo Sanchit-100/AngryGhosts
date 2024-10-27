@@ -4,7 +4,9 @@ Angry Birds Ghosts is an exciting twist on the classic Angry Birds saga. In this
 ## Features
 
 Haunting Gameplay: Control the ghostly Angry Birds in thrilling physics-based levels.
+
 Battle Against Pigs: Use strategic aim and ghostly powers to topple the pigs’ defenses.
+
 Win/Loss Simulation: For testing purposes, you can manually simulate a win or loss by selecting the thumbs up or thumbs down buttons on the Level 1 screen.
 
 ## How to Run the Game

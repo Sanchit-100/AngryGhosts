@@ -100,13 +100,13 @@ public class lose_screen implements Screen {
         if (Gdx.input.justTouched()) {
             Vector3 touch = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             viewport.unproject(touch);
-            if (isButtonClicked(touch, xMainMenu, 100)) {
+            if (isButtonClicked(touch, xMainMenu, worldHeight*0.2f)) {
                 this.dispose();
                 ag.setScreen(new main_menu(ag));
-            } else if (isButtonClicked(touch, xRestart, 100)) {
+            } else if (isButtonClicked(touch, xRestart, worldHeight*0.2f)) {
                 this.dispose();
                 ag.setScreen(new level_1(ag)); // You can restart the level here
-            } else if (isButtonClicked(touch, xSettings, 100)) {
+            } else if (isButtonClicked(touch, xSettings, worldHeight*0.2f)) {
                 this.dispose();
                 ag.setScreen(new Level_selection(ag)); // Open settings screen
             }

@@ -1,6 +1,6 @@
 ## Game Overview
 
-Angry Birds Ghosts is an exciting twist on the classic Angry Birds saga. In this version, the Angry Birds have come back as ghosts to seek revenge on the pigs who wronged them. With a haunting new atmosphere, players must control these ghostly birds to overcome obstacles, defeat enemies, and bring peace back to their realm. The pigs are in for the fright of their lives as they attempt to defend themselves from these otherworldly attackers!
+Angry Birds Dead Hour is an exciting twist on the classic Angry Birds saga. In this version, the Angry Birds have come back as ghosts to seek revenge on the pigs who wronged them. With a haunting new atmosphere, players must control these ghostly birds to overcome obstacles, defeat enemies, and bring peace back to their realm. The pigs are in for the fright of their lives as they attempt to defend themselves from these otherworldly attackers!
 ## Features
 
 Haunting Gameplay: Control the ghostly Angry Birds in thrilling physics-based levels.
@@ -40,7 +40,7 @@ The gameplay simulation options in Level 1 are temporary and will be replaced wi
 
 ## License
 
-Angry Birds Ghosts is developed as a fan-based project and is not officially associated with the original Angry Birds series by Rovio Entertainment. This project is intended for educational and personal entertainment purposes only.
+Angry Birds Dead Hour is developed as a fan-based project and is not officially associated with the original Angry Birds series by Rovio Entertainment. This project is intended for educational and personal entertainment purposes only.
 ## Platforms
 
 - `core`: Main module with the application logic shared by all platforms.

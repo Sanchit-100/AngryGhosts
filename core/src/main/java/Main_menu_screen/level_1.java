@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
 public class level_1 implements Screen {
     private static final float BUTTON_WIDTH_PERCENT = 0.1f;
@@ -30,6 +31,9 @@ public class level_1 implements Screen {
 
     private float buttonWidth, buttonHeight;
     private float xWin, xLose;
+
+    private GameWorld gameWorld; // Add GameWorld
+    private Box2DDebugRenderer debugRenderer; // Debug renderer for Box2D
 
     public level_1(Angry_ghosts ag) {
         this.ag = ag;
@@ -53,6 +57,12 @@ public class level_1 implements Screen {
         camera = new OrthographicCamera();
         viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
         camera.position.set(viewport.getWorldWidth() / 2f, viewport.getWorldHeight() / 2f, 0);
+
+        // Initialize GameWorld
+        gameWorld = new GameWorld();
+
+        // Initialize Box2D debug renderer
+        debugRenderer = new Box2DDebugRenderer();
     }
 
     @Override
@@ -110,19 +120,15 @@ public class level_1 implements Screen {
         ag.batch.draw(woodenBlock, 1535, 885, 150, 70);
         ag.batch.draw(pigSprites[0], 1550, 940, 120, 120);
 
-
-//        ag.batch.draw(woodenBlock, 550, 100, 100, 150);
-//        ag.batch.draw(pigSprites[1], 570, 130, 120, 120);
-//
-//        ag.batch.draw(glassBlock, 700, 100, 100, 150);
-//        ag.batch.draw(pigSprites[2], 720, 130, 120, 120);
-
         // Draw the buttons at the bottom right
         ag.batch.draw(winButton, xWin, 50, buttonWidth, buttonHeight);
         ag.batch.draw(loseButton, xLose, 50, buttonWidth, buttonHeight);
         ag.batch.draw(pauseButton, worldWidth*0.05f,worldHeight*0.9f,buttonWidth,buttonHeight);
 
         ag.batch.end();
+
+        // Render Box2D debug visuals
+        debugRenderer.render(gameWorld.getWorld(), camera.combined);
 
         // Handle input
         if (Gdx.input.justTouched()) {
@@ -176,5 +182,7 @@ public class level_1 implements Screen {
         woodenBlock.dispose();
         winButton.dispose();
         loseButton.dispose();
+        gameWorld.dispose(); // Dispose the game world
+        debugRenderer.dispose(); // Dispose the debug renderer
     }
 }

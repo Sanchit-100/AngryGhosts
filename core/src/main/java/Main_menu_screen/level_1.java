@@ -156,8 +156,17 @@ public class level_1 implements Screen {
 
         // Draw birds
         for (Bird bird : birds) {
-            Vector2 position = bird.getBody().getPosition();
-            ag.batch.draw(bird.getTexture(), position.x - bird.getRadius(), position.y - bird.getRadius(), bird.getRadius() * 2, bird.getRadius() * 2);
+            if (bird != currentBird) {
+                Vector2 position = bird.getBody().getPosition();
+                ag.batch.draw(bird.getTexture(), position.x - bird.getRadius(), position.y - bird.getRadius(), bird.getRadius() * 2, bird.getRadius() * 2);
+            }
+        }
+
+        // Draw the current bird if it has been launched or is being dragged
+        if (currentBird != null) {
+            Vector2 position = currentBird.getBody().getPosition();
+            float yOffset = isDragging ? 200 : 0;  // Raise the current bird by 30 units while dragging
+            ag.batch.draw(currentBird.getTexture(), position.x - currentBird.getRadius(), position.y - currentBird.getRadius() + yOffset, currentBird.getRadius() * 2, currentBird.getRadius() * 2);
         }
 
         // Draw pigs
@@ -179,17 +188,20 @@ public class level_1 implements Screen {
 
         ag.batch.end();
 
-        // Render Box2D debug visuals
-        debugRenderer.render(gameWorld.getWorld(), camera.combined);
+        // Comment out or remove this line to avoid rendering the debug visuals
+        // debugRenderer.render(gameWorld.getWorld(), camera.combined);
 
         // Handle input
         handleInput();
 
+        // Remove pigs marked for removal
         pigs.removeIf(pig -> "remove".equals(pig.getBody().getUserData()));
 
         // Update game world
         gameWorld.getWorld().step(delta, 6, 2);
     }
+
+
 
     private void handleInput() {
         if (Gdx.input.isTouched()) {
@@ -200,19 +212,46 @@ public class level_1 implements Screen {
                 isDragging = true;
             }
 
-            // Update slingEnd to the current touch position
-            slingEnd.set(touch.x, touch.y);
+            // Restrict the bird's position to within a certain distance from the slingshot
+            Vector2 stretchVector = slingStart.cpy().sub(touch.x, touch.y);
+            float maxStretch = 200f; // Maximum stretch length
+            if (stretchVector.len() > maxStretch) {
+                stretchVector.setLength(maxStretch);
+            }
 
-            // Update the bird's position to follow the drag
+            // Ensure the bird's position doesn't go below ground level
+            float groundLevelY = 100f; // Example ground level y-coordinate
+            float newY = slingStart.y - stretchVector.y;
+            if (newY < groundLevelY) {
+                newY = groundLevelY;
+            }
+
+            // Update slingEnd to the current touch position, constrained by ground level
+            slingEnd.set(slingStart.x - stretchVector.x, newY);
+
+            // Update the bird's position to follow the drag within the restricted area
             currentBird.getBody().setTransform(slingEnd, 0);
         } else if (isDragging) {
             // When the user releases the touch, launch the bird
             isDragging = false;
-            Vector2 launchVector = slingStart.cpy().sub(slingEnd);
-            currentBird.getBody().applyLinearImpulse(launchVector.scl(5), currentBird.getBody().getWorldCenter(), true);
 
-            // Remove the launched bird from the list of birds
-            birds.remove(currentBird);
+            // Ensure bird launches from its current position on the slingshot
+            Vector2 launchPosition = currentBird.getBody().getPosition();
+            launchPosition.y+=200;
+
+            // Calculate the launch force based on the stretch vector
+            Vector2 launchVector = slingStart.cpy().sub(launchPosition);
+            float launchForce = 1e12f * launchVector.len(); // Adjust scaling factor for balanced launch
+
+            // Normalize the launch vector to maintain direction but scale the magnitude
+//            launchVector.nor().scl(launchForce);
+
+            currentBird.getBody().setLinearDamping(0.5f); // To reduce bird's speed over time
+            currentBird.getBody().applyLinearImpulse(launchVector, currentBird.getBody().getWorldCenter(), true);
+            System.out.println(currentBird.getBody().getPosition());
+
+            // Keep track of the launched bird without removing it
+            currentBird = null;
 
             // Set the next bird as the current bird, if available
             if (!birds.isEmpty()) {
@@ -220,6 +259,12 @@ public class level_1 implements Screen {
             }
         }
     }
+
+
+
+
+
+
 
     private boolean isButtonClicked(Vector3 touch, float x, float y) {
         return touch.x >= x && touch.x <= x + buttonWidth && touch.y >= y && touch.y <= y + buttonHeight;

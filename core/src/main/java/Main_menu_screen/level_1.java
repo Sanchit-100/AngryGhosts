@@ -29,10 +29,10 @@ public class level_1 implements Screen {
     private float timeSinceLastLaunch = 0;
     private boolean birdLaunched = false;
     private ShapeRenderer shapeRenderer;
-    private Vector2 lastVelocity = new Vector2(0, 0);
+  //  private Vector2 lastVelocity = new Vector2(0, 0);
     private float stationaryTime = 0f;
-    private static final float MAX_STATIONARY_TIME = 2f; // 2 seconds of minimal movement
-    private static final float MOVEMENT_THRESHOLD = 0.5f; // Threshold for considering movement
+   // private static final float MAX_STATIONARY_TIME = 2f; // 2 seconds of minimal movement
+    //private static final float MOVEMENT_THRESHOLD = 0.5f; // Threshold for considering movement
     private boolean checkBirdStop = false;
 
     private static final float LAUNCH_FORCE_MULTIPLIER = 20000000000000f;
@@ -214,7 +214,8 @@ public class level_1 implements Screen {
             }
         }
 
-
+        float fixedTimeStep = Math.min(delta, 1 / 60f); // Cap the timestep to prevent jumps
+        gameWorld.getWorld().step(fixedTimeStep * 2, 1, 1);
 
         // Draw the current bird if it has been launched or is being dragged
         if (currentBird != null && birdLaunched) {
@@ -279,10 +280,6 @@ public class level_1 implements Screen {
             }
         }
         handleInput();
-
-
-
-
 
 
         if (currentBird != null) {
@@ -366,18 +363,17 @@ public class level_1 implements Screen {
 
                 // Calculate launch vector
                 Vector2 launchVector = new Vector2(
-                    -100000f*(slingshotCenter.x - (birdBody.getPosition().x)),
-                    -100000f*(slingshotCenter.y - (birdBody.getPosition().y))
+                    -10000000000f*(slingshotCenter.x - (birdBody.getPosition().x)),
+                    -10000000000f*(slingshotCenter.y - (birdBody.getPosition().y))
                 );
 
                 // Enhanced launch force calculation
                 float stretchDistance = launchVector.len();
-                float launchForce = Math.min(stretchDistance * LAUNCH_FORCE_MULTIPLIER, 2000000000f);
+                float launchForce = Math.min(stretchDistance * LAUNCH_FORCE_MULTIPLIER*10000000000000000000000000000000000000f, 20000000000000f);
 
                 // Normalize and scale the vector with angle preservation
                 launchVector.nor().scl(launchForce);
 
-                // Debug launch parameters
                 System.out.println("Launch Vector: " + launchVector);
                 System.out.println("Launch Force: " + launchForce);
 
@@ -386,7 +382,7 @@ public class level_1 implements Screen {
 
                 // Enhanced flight characteristics
                 birdBody.setBullet(true);
-                birdBody.setLinearDamping(0.5f);
+               // birdBody.setLinearDamping(0.5f);
 
                 // Reset launch state
                 isDragging = false;

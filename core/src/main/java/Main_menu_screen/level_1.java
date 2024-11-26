@@ -29,6 +29,11 @@ public class level_1 implements Screen {
     private float timeSinceLastLaunch = 0;
     private boolean birdLaunched = false;
     private ShapeRenderer shapeRenderer;
+    private Vector2 lastVelocity = new Vector2(0, 0);
+    private float stationaryTime = 0f;
+    private static final float MAX_STATIONARY_TIME = 2f; // 2 seconds of minimal movement
+    private static final float MOVEMENT_THRESHOLD = 0.5f; // Threshold for considering movement
+    private boolean checkBirdStop = false;
 
     private static final float LAUNCH_FORCE_MULTIPLIER = 20000000000000f;
     private static final float MAX_LAUNCH_STRETCH = 250f;
@@ -192,6 +197,9 @@ public class level_1 implements Screen {
         ag.batch.draw(slingshotImage, slingStart.x, slingStart.y, 150, 250);
 
         // Draw birds
+        if(birdLaunched){
+            checkBirdVelocity();
+        }
         for (Bird bird : birds) {
             Vector2 position = bird.getBody().getPosition();
 
@@ -282,8 +290,16 @@ public class level_1 implements Screen {
             System.out.println("Bird Velocity: " + velocity);
         }
 
+
         if (birdLaunched) {
             timeSinceLastLaunch += delta;
+        }
+        if (currentBird != null && birdLaunched) {
+            Vector2 currentVelocity = currentBird.getBody().getLinearVelocity();
+            System.out.println("Detailed Velocity Tracking:");
+            System.out.println("Current Velocity X: " + currentVelocity.x);
+            System.out.println("Current Velocity Y: " + currentVelocity.y);
+            System.out.println("Stationary Time: " + stationaryTime);
         }
         // Update game world
         gameWorld.getWorld().step(delta, 8, 3);
@@ -370,50 +386,53 @@ public class level_1 implements Screen {
 
                 // Enhanced flight characteristics
                 birdBody.setBullet(true);
-                birdBody.setLinearDamping(0.1f);
+                birdBody.setLinearDamping(0.5f);
 
                 // Reset launch state
                 isDragging = false;
                 birdLaunched = true;
-               // tries++;
 
-                if (currentBird != null && birdLaunched) {
-                    Vector2 velocity = currentBird.getBody().getLinearVelocity();
 
-                    // Debug print for velocity
-                    System.out.println("Bird Velocity: " + velocity);
 
-                    // Check if velocity is very low (almost stopped)
-                    if (Math.abs(velocity.x) < 2.0f && Math.abs(velocity.y) < 2.0f) {
-                        // Remove current bird
-                        birds.remove(currentBird);
-
-                        // Reset launch states
-                        birdLaunched = false;
-
-                        // Increment tries
-                        tries++;
-
-                        // Select next bird if available
-                        if (!birds.isEmpty()) {
-                            currentBird = birds.get(0);
-                        } else {
-                            currentBird = null;
-                            // Check game progression if no birds left
-                            checkScoreAndProceed();
-                        }
-                    }
+                // Check game progression
+                if (tries >= MAX_TRIES) {
+                    checkScoreAndProceed();
                 }
+                if (birdLaunched) {
+                    checkBirdStop = true;
+                    stationaryTime = 0f;
+                }
+            }
+        }
+    }
+    private void checkBirdVelocity() {
+        if (currentBird != null && birdLaunched) {
+            Vector2 velocity = currentBird.getBody().getLinearVelocity();
+
+            System.out.println("Velocity X: " + velocity.x);
+            System.out.println("Velocity Y: " + velocity.y);
+            System.out.println("Absolute Velocity X: " + Math.abs(velocity.x));
+            System.out.println("Absolute Velocity Y: " + Math.abs(velocity.y));
+
+            // Check if velocity is very close to zero
+            if (Math.abs(velocity.x) < 1f && Math.abs(velocity.y) < 1f) {
+                System.out.println("Bird velocity low, switching bird");
+
+                // Remove current bird
+                birds.remove(currentBird);
+
+                // Reset launch states
+                birdLaunched = false;
+
+                // Increment tries
+                tries++;
 
                 // Select next bird if available
                 if (!birds.isEmpty()) {
                     currentBird = birds.get(0);
                 } else {
                     currentBird = null;
-                }
-
-                // Check game progression
-                if (tries >= MAX_TRIES) {
+                    // Check game progression if no birds left
                     checkScoreAndProceed();
                 }
             }

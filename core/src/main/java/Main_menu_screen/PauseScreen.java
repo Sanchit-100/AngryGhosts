@@ -31,11 +31,11 @@ public class PauseScreen implements Screen {
         this.ag = ag;
 
         // Load textures
-        backgroundImage = new Texture("Assets/spooky_bg_6.jpg");
-        pauseImage = new Texture("Assets/main menu screen.jpg");  // Image on the right side
-        resumeButton = new Texture("Assets/resume.png");
-        restartButton = new Texture("Assets/restart.png");
-        mainMenuButton = new Texture("Assets/main_menu_icon.png");
+        backgroundImage = new Texture("spooky_bg_6.jpg");
+        pauseImage = new Texture("main menu screen.jpg");  // Image on the right side
+        resumeButton = new Texture("resume.png");
+        restartButton = new Texture("restart.png");
+        mainMenuButton = new Texture("main_menu_icon.png");
 
         // Create the camera and viewport
         camera = new OrthographicCamera();

@@ -33,13 +33,13 @@ public class win_screen implements Screen {
         this.ag = ag;
 
         // Load textures
-        backgroundImage = new Texture("Assets/spooky_bg_4.jpg");
-        subBackgroundImage = new Texture("Assets/sub_bg.png");  // Load sub-background image texture
-        victoryImage = new Texture("Assets/victory_new.png");
-        mainMenuButton = new Texture("Assets/home.png");
-        restartButton = new Texture("Assets/restart.png");
-        settingsButton = new Texture("Assets/main_menu_icon.png");
-        pointsImage = new Texture("Assets/points_new.png");  // Load points image texture
+        backgroundImage = new Texture("spooky_bg_4.jpg");
+        subBackgroundImage = new Texture("sub_bg.png");  // Load sub-background image texture
+        victoryImage = new Texture("victory_new.png");
+        mainMenuButton = new Texture("home.png");
+        restartButton = new Texture("restart.png");
+        settingsButton = new Texture("main_menu_icon.png");
+        pointsImage = new Texture("points_new.png");  // Load points image texture
 
         // Create the camera and viewport
         camera = new OrthographicCamera();

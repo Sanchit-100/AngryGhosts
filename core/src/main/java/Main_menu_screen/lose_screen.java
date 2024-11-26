@@ -35,13 +35,13 @@ public class lose_screen implements Screen {
         this.ag = ag;
 
         // Load textures
-        backgroundImage = new Texture("Assets/spooky_bg_2.png");
-        victoryImage = new Texture("Assets/defeat_icon.png");
-        mainMenuButton = new Texture("Assets/home.png");
-        restartButton = new Texture("Assets/restart.png");
-        settingsButton = new Texture("Assets/main_menu_icon.png");
-        pointsImage = new Texture("Assets/points_new.png");  // Load points image texture
-        subBackgroundImage = new Texture("Assets/sub_bg.png");
+        backgroundImage = new Texture("spooky_bg_2.png");
+        victoryImage = new Texture("defeat_icon.png");
+        mainMenuButton = new Texture("home.png");
+        restartButton = new Texture("restart.png");
+        settingsButton = new Texture("main_menu_icon.png");
+        pointsImage = new Texture("points_new.png");  // Load points image texture
+        subBackgroundImage = new Texture("sub_bg.png");
 
 
         // Create the camera and viewport

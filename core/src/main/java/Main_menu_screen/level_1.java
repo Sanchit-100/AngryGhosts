@@ -3,14 +3,17 @@ package Main_menu_screen;
 import angry.birds.game.Angry_ghosts;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.math.Vector3;
+
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
@@ -25,6 +28,12 @@ public class level_1 implements Screen {
     private static final int MAX_TRIES = 3;
     private float timeSinceLastLaunch = 0;
     private boolean birdLaunched = false;
+    private ShapeRenderer shapeRenderer;
+
+    private static final float LAUNCH_FORCE_MULTIPLIER = 20000000000000f;
+    private static final float MAX_LAUNCH_STRETCH = 250f;
+    private static final float LAUNCH_DAMPENING = 0.05f;
+
 
 
     private Texture backgroundImage;
@@ -61,29 +70,29 @@ public class level_1 implements Screen {
         this.ag = ag;
 
         // Load textures
-        backgroundImage = new Texture("Assets/spooky_bg_6.jpg");
-        slingshotImage = new Texture("Assets/slingshot.png");
-        ghostSprites[0] = new Texture("Assets/angry1.png");
-        ghostSprites[1] = new Texture("Assets/angry2.png");
-        ghostSprites[2] = new Texture("Assets/angry3.png");
-        pigSprites[0] = new Texture("Assets/pig1.png");
-        pigSprites[1] = new Texture("Assets/pig1.png");
-        pigSprites[2] = new Texture("Assets/pig1.png");
-        pauseButton = new Texture("Assets/pause.png");
-        glassBlock = new Texture("Assets/glass_block.png");
-        woodenBlock = new Texture("Assets/wooden_block.png");
-        winButton = new Texture("Assets/win_icon.png");
-        loseButton = new Texture("Assets/lose_icon.png");
-        groundBlock = new Texture("Assets/ground.jpg");
+        backgroundImage = new Texture("spooky_bg_6.jpg");
+        slingshotImage = new Texture("slingshot.png");
+        ghostSprites[0] = new Texture("angry1.png");
+        ghostSprites[1] = new Texture("angry2.png");
+        ghostSprites[2] = new Texture("angry3.png");
+        pigSprites[0] = new Texture("pig1.png");
+        pigSprites[1] = new Texture("pig1.png");
+        pigSprites[2] = new Texture("pig1.png");
+        pauseButton = new Texture("pause.png");
+        glassBlock = new Texture("glass_block.png");
+        woodenBlock = new Texture("wooden_block.png");
+        winButton = new Texture("win_icon.png");
+        loseButton = new Texture("lose_icon.png");
+        groundBlock = new Texture("ground.jpg");
+        shapeRenderer = new ShapeRenderer();
 
-        // Create the camera and viewport
-        camera = new OrthographicCamera();
+
+            camera = new OrthographicCamera();
         viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
         camera.position.set(viewport.getWorldWidth() / 2f, viewport.getWorldHeight() / 2f, 0);
 
         // Initialize GameWorld
         gameWorld = new GameWorld();
-
         gameWorld.getWorld().setContactListener(new GameContactListener(this));
 
         // Initialize Box2D debug renderer
@@ -112,11 +121,11 @@ public class level_1 implements Screen {
         pigs = new ArrayList<>();
         blocks = new ArrayList<>();
 
-        // Create birds
-        birds.add(new Bird(gameWorld.getWorld(), ghostSprites[0], new Vector2(250, 200), 40));
-        birds.add(new Bird(gameWorld.getWorld(), ghostSprites[1], new Vector2(300, 200), 40));
-        birds.add(new Bird(gameWorld.getWorld(), ghostSprites[2], new Vector2(350, 200), 40));
-
+        // Adjust bird spawn heights
+        float groundHeight = 200f; // Adjust based on your ground block positioning
+        birds.add(new Bird(gameWorld.getWorld(), ghostSprites[0], new Vector2(250, groundHeight + 100), 40));
+        birds.add(new Bird(gameWorld.getWorld(), ghostSprites[1], new Vector2(300, groundHeight + 100), 40));
+        birds.add(new Bird(gameWorld.getWorld(), ghostSprites[2], new Vector2(350, groundHeight + 100), 40));
         // Create pigs
         pigs.add(new Pig(gameWorld.getWorld(), pigSprites[0], new Vector2(1100, 430), 40));
         pigs.add(new Pig(gameWorld.getWorld(), pigSprites[1], new Vector2(1400, 430), 40));
@@ -168,6 +177,7 @@ public class level_1 implements Screen {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
+
         camera.update();
         ag.batch.setProjectionMatrix(camera.combined);
         ag.batch.begin();
@@ -183,18 +193,32 @@ public class level_1 implements Screen {
 
         // Draw birds
         for (Bird bird : birds) {
-            if (bird != currentBird) {
-                Vector2 position = bird.getBody().getPosition();
-                ag.batch.draw(bird.getTexture(), position.x - bird.getRadius(), position.y - bird.getRadius(), bird.getRadius() * 2, bird.getRadius() * 2);
+            Vector2 position = bird.getBody().getPosition();
+
+            // Only draw birds that aren't the current launching bird
+            if (bird != currentBird || !isDragging) {
+                ag.batch.draw(bird.getTexture(),
+                    position.x - bird.getRadius(),
+                    position.y - bird.getRadius(),
+                    bird.getRadius() * 2,
+                    bird.getRadius() * 2
+                );
             }
         }
 
+
+
         // Draw the current bird if it has been launched or is being dragged
-        if (currentBird != null) {
+        if (currentBird != null && birdLaunched) {
             Vector2 position = currentBird.getBody().getPosition();
-            float yOffset = isDragging ? 200 : 0;  // Raise the current bird by 30 units while dragging
-            ag.batch.draw(currentBird.getTexture(), position.x - currentBird.getRadius(), position.y - currentBird.getRadius() + yOffset, currentBird.getRadius() * 2, currentBird.getRadius() * 2);
+            ag.batch.draw(currentBird.getTexture(),
+                position.x - currentBird.getRadius(),
+                position.y - currentBird.getRadius(),
+                currentBird.getRadius() * 2,
+                currentBird.getRadius() * 2
+            );
         }
+
 
         // Draw pigs
         for (Pig pig : pigs) {
@@ -217,6 +241,14 @@ public class level_1 implements Screen {
         font.getData().setScale(2);
         String scoreText = "Score: " + getScore();
         font.draw(ag.batch, scoreText, worldWidth - 200, worldHeight - 50);
+        if (isDragging && currentBird != null) {
+            shapeRenderer.setProjectionMatrix(camera.combined);
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+            shapeRenderer.setColor(Color.RED);
+            Vector2 birdPos = currentBird.getBody().getPosition();
+            shapeRenderer.line(250, 150, birdPos.x, birdPos.y);
+            shapeRenderer.end();
+        }
 
         ag.batch.end();
 
@@ -240,32 +272,24 @@ public class level_1 implements Screen {
         }
         handleInput();
 
-        pigs.removeIf(pig -> {
-            if ("remove".equals(pig.getBody().getUserData())) {
-                gameWorld.getWorld().destroyBody(pig.getBody());
-                return true;
-            }
-            return false;
-        });
 
-        if (birdLaunched && timeSinceLastLaunch >= 10f) {
-            birds.remove(currentBird);
-            if (currentBird != null) {
-                gameWorld.getWorld().destroyBody(currentBird.getBody());
-                currentBird = null;
-                birdLaunched = false;
-                if (!birds.isEmpty()) {
-                    currentBird = birds.get(0);
-                }
-            }
+
+
+
+
+        if (currentBird != null) {
+            Vector2 velocity = currentBird.getBody().getLinearVelocity();
+            System.out.println("Bird Velocity: " + velocity);
         }
 
         if (birdLaunched) {
             timeSinceLastLaunch += delta;
         }
         // Update game world
-        gameWorld.getWorld().step(delta, 6, 2);
+        gameWorld.getWorld().step(delta, 8, 3);
     }
+    private static final float MAX_STRETCH_DISTANCE = 250f;
+   // private static final float LAUNCH_FORCE_MULTIPLIER = 15f;
 
 
     private void handleInput() {
@@ -273,52 +297,125 @@ public class level_1 implements Screen {
             Vector3 touch = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             viewport.unproject(touch);
 
-            if (!isDragging) {
-                isDragging = true;
+            // Bird selection and dragging logic
+            if (!birdLaunched && !isDragging) {
+                for (Bird bird : birds) {
+                    Vector2 birdPosition = bird.getBody().getPosition();
+                    float touchRadius = bird.getRadius() * 3;
+                    float distanceToBird = Vector2.dst(touch.x, touch.y, birdPosition.x, birdPosition.y);
+
+                    if (bird.isSelectable() && distanceToBird < touchRadius) {
+                        currentBird = bird;
+                        isDragging = true;
+                        System.out.println("Bird Selected: " + currentBird);
+                        break;
+                    }
+                }
             }
 
-            // Restrict the bird's position to within a certain distance from the slingshot
-            Vector2 stretchVector = slingStart.cpy().sub(touch.x, touch.y);
-            float maxStretch = 200f; // Maximum stretch length
-            if (stretchVector.len() > maxStretch) {
-                stretchVector.setLength(maxStretch);
+            if (currentBird != null && isDragging) {
+                // Fixed slingshot center
+                Vector2 slingshotCenter = new Vector2(250, 150);
+
+                // Calculate stretch vector
+                Vector2 stretchVector = new Vector2(
+                    slingshotCenter.x - touch.x,
+                    slingshotCenter.y - touch.y
+                );
+
+                // Limit stretch distance
+                float maxStretchDistance = MAX_STRETCH_DISTANCE;
+                if (stretchVector.len() > maxStretchDistance) {
+                    stretchVector.setLength(maxStretchDistance);
+                }
+
+                // Calculate bird position within slingshot
+                Vector2 birdPosition = new Vector2(
+                    slingshotCenter.x - stretchVector.x,
+                    slingshotCenter.y - stretchVector.y
+                );
+
+                // Modify bird position during drag without completely stopping physics
+                Body birdBody = currentBird.getBody();
+                birdBody.setTransform(birdPosition, birdBody.getAngle());
             }
+        }
+        else if (isDragging) {
+            // Bird Launch Logic
+            if (currentBird != null) {
+                Body birdBody = currentBird.getBody();
 
-            // Ensure the bird's position doesn't go below ground level
-            float groundLevelY = 100f; // Example ground level y-coordinate
-            float newY = slingStart.y - stretchVector.y;
-            if (newY < groundLevelY) {
-                newY = groundLevelY;
-            }
+                // Slingshot center
+                Vector2 slingshotCenter = new Vector2(250, 150);
 
-            // Update slingEnd to the current touch position, constrained by ground level
-            slingEnd.set(slingStart.x - stretchVector.x, newY);
+                // Calculate launch vector
+                Vector2 launchVector = new Vector2(
+                    -100000f*(slingshotCenter.x - (birdBody.getPosition().x)),
+                    -100000f*(slingshotCenter.y - (birdBody.getPosition().y))
+                );
 
-            // Update the bird's position to follow the drag within the restricted area
-            currentBird.getBody().setTransform(slingEnd, 0);
-        } else if (isDragging) {
-            // When the user releases the touch, launch the bird
-            isDragging = false;
+                // Enhanced launch force calculation
+                float stretchDistance = launchVector.len();
+                float launchForce = Math.min(stretchDistance * LAUNCH_FORCE_MULTIPLIER, 2000000000f);
 
-            // Ensure bird launches from its current position on the slingshot
-            Vector2 launchPosition = currentBird.getBody().getPosition();
-//            launchPosition.y+=200;
+                // Normalize and scale the vector with angle preservation
+                launchVector.nor().scl(launchForce);
 
-            // Calculate the launch force based on the stretch vector
-            Vector2 launchVector = slingStart.cpy().sub(launchPosition);
-            float launchForce = 1e15f * launchVector.len(); // Adjust scaling factor for balanced launch
+                // Debug launch parameters
+                System.out.println("Launch Vector: " + launchVector);
+                System.out.println("Launch Force: " + launchForce);
 
-            // Normalize the launch vector to maintain direction but scale the magnitude
-            launchVector.nor().scl(launchForce);
+                // Apply impulse with world center
+                birdBody.applyLinearImpulse(launchVector, birdBody.getWorldCenter(), true);
 
-//            currentBird.getBody().setLinearDamping(0.5f);
-            currentBird.getBody().applyLinearImpulse(launchVector, currentBird.getBody().getWorldCenter(), true);
-            tries++;
+                // Enhanced flight characteristics
+                birdBody.setBullet(true);
+                birdBody.setLinearDamping(0.1f);
 
-            birdLaunched=true;
-            timeSinceLastLaunch=0;
-            if (tries >= MAX_TRIES) {
-                checkScoreAndProceed();
+                // Reset launch state
+                isDragging = false;
+                birdLaunched = true;
+               // tries++;
+
+                if (currentBird != null && birdLaunched) {
+                    Vector2 velocity = currentBird.getBody().getLinearVelocity();
+
+                    // Debug print for velocity
+                    System.out.println("Bird Velocity: " + velocity);
+
+                    // Check if velocity is very low (almost stopped)
+                    if (Math.abs(velocity.x) < 2.0f && Math.abs(velocity.y) < 2.0f) {
+                        // Remove current bird
+                        birds.remove(currentBird);
+
+                        // Reset launch states
+                        birdLaunched = false;
+
+                        // Increment tries
+                        tries++;
+
+                        // Select next bird if available
+                        if (!birds.isEmpty()) {
+                            currentBird = birds.get(0);
+                        } else {
+                            currentBird = null;
+                            // Check game progression if no birds left
+                            checkScoreAndProceed();
+                        }
+                    }
+                }
+
+                // Select next bird if available
+                if (!birds.isEmpty()) {
+                    currentBird = birds.get(0);
+                } else {
+                    currentBird = null;
+                }
+
+                // Check game progression
+                if (tries >= MAX_TRIES) {
+                    checkScoreAndProceed();
+                }
             }
         }
     }

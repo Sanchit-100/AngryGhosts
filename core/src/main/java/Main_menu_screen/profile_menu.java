@@ -57,10 +57,10 @@ public class profile_menu implements Screen {
     }
 
     @Override
-    public void show() {}
+    public void show(){}
 
     @Override
-    public void render(float v) {
+    public void render(float v){
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
 
         camera.update();
@@ -83,11 +83,11 @@ public class profile_menu implements Screen {
 
 
         // Check if the back button is clicked
-        if (Gdx.input.justTouched()) {
+        if(Gdx.input.justTouched()){
             Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             viewport.unproject(touchPos); // Convert screen coordinates to world coordinates
 
-            if (isButtonClicked(touchPos, backButtonX, backButtonY, backButtonWidth, backButtonHeight)) {
+            if (isButtonClicked(touchPos, backButtonX, backButtonY, backButtonWidth, backButtonHeight)){
                 // Dispose current screen and switch to the previous screen (e.g., main menu)
                 this.dispose();
                 ag.setScreen(new main_menu(ag)); // Assuming `main_menu` is the previous screen
@@ -102,7 +102,7 @@ public class profile_menu implements Screen {
     }
 
     @Override
-    public void resize(int width, int height) {
+    public void resize(int width, int height){
         viewport.update(width, height, true);
         camera.position.set(viewport.getWorldWidth() / 2f, viewport.getWorldHeight() / 2f, 0);
     }
@@ -117,7 +117,7 @@ public class profile_menu implements Screen {
     public void hide() {}
 
     @Override
-    public void dispose() {
+    public void dispose(){
         main_bg.dispose();
         second_bg.dispose();
         back_button.dispose();

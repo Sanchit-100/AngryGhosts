@@ -38,7 +38,7 @@ public class Bird {
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
-        fixtureDef.density = 0.1f; // Lighter weight
+        fixtureDef.density = 1f; // Lighter weight
         //fixtureDef.friction = 0.1f; // Reduced friction
         fixtureDef.restitution = 0.4f; // Moderate bounciness
 

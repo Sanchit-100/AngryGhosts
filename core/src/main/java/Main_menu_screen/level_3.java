@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class level_1 implements GameLevel,Screen {
+public class level_3 implements Screen,GameLevel {
     private int pigsDestroyed = 0;
     private static final float BUTTON_WIDTH_PERCENT = 0.1f;
     private static final float BUTTON_HEIGHT_PERCENT = 0.1f;
@@ -29,9 +29,9 @@ public class level_1 implements GameLevel,Screen {
     private float timeSinceLastLaunch = 0;
     private boolean birdLaunched = false;
     private ShapeRenderer shapeRenderer;
-  //  private Vector2 lastVelocity = new Vector2(0, 0);
+    //  private Vector2 lastVelocity = new Vector2(0, 0);
     private float stationaryTime = 0f;
-   // private static final float MAX_STATIONARY_TIME = 2f; // 2 seconds of minimal movement
+    // private static final float MAX_STATIONARY_TIME = 2f; // 2 seconds of minimal movement
     //private static final float MOVEMENT_THRESHOLD = 0.5f; // Threshold for considering movement
     private boolean checkBirdStop = false;
 
@@ -71,7 +71,7 @@ public class level_1 implements GameLevel,Screen {
     private Vector2 slingStart;
     private Vector2 slingEnd;
 
-    public level_1(Angry_ghosts ag) {
+    public level_3(Angry_ghosts ag) {
         this.ag = ag;
 
         // Load textures
@@ -92,7 +92,7 @@ public class level_1 implements GameLevel,Screen {
         shapeRenderer = new ShapeRenderer();
 
 
-            camera = new OrthographicCamera();
+        camera = new OrthographicCamera();
         viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
         camera.position.set(viewport.getWorldWidth() / 2f, viewport.getWorldHeight() / 2f, 0);
 
@@ -116,7 +116,8 @@ public class level_1 implements GameLevel,Screen {
         pigsDestroyed++;
     }
 
-    public GameWorld getWorld(){
+    @Override
+    public GameWorld getWorld() {
         return gameWorld;
     }
 
@@ -306,7 +307,7 @@ public class level_1 implements GameLevel,Screen {
         gameWorld.getWorld().step(delta, 8, 3);
     }
     private static final float MAX_STRETCH_DISTANCE = 250f;
-   // private static final float LAUNCH_FORCE_MULTIPLIER = 15f;
+    // private static final float LAUNCH_FORCE_MULTIPLIER = 15f;
 
 
     private void handleInput() {
@@ -386,7 +387,7 @@ public class level_1 implements GameLevel,Screen {
 
                 // Enhanced flight characteristics
                 birdBody.setBullet(true);
-               // birdBody.setLinearDamping(0.5f);
+                // birdBody.setLinearDamping(0.5f);
 
                 // Reset launch state
                 isDragging = false;

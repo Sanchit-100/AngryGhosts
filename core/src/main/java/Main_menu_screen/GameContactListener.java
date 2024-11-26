@@ -1,16 +1,11 @@
 package Main_menu_screen;
 
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.physics.box2d.Contact;
-import com.badlogic.gdx.physics.box2d.ContactListener;
-import com.badlogic.gdx.physics.box2d.Manifold;
-import com.badlogic.gdx.physics.box2d.ContactImpulse;
-import com.badlogic.gdx.physics.box2d.Fixture;
 
 public class GameContactListener implements ContactListener {
-    private level_1 level;
+    private GameLevel level;
 
-    public GameContactListener(level_1 level) {
+    public GameContactListener(GameLevel level) {
         this.level = level;
     }
 

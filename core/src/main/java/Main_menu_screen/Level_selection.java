@@ -34,7 +34,7 @@ public class Level_selection implements Screen {
         camera = new OrthographicCamera();
         viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
         stage = new Stage(viewport, game.batch);
-        select_level= new Texture("select_level.png");
+        select_level = new Texture("select_level.png");
 
         // Load the background image
         background = new Texture(Gdx.files.internal("spooky_bg.jpg"));
@@ -101,16 +101,22 @@ public class Level_selection implements Screen {
 
     private void startLevel(int level) {
 
-            switch (level) {
-                case 1:
-                    game.setScreen(new Story_screen(game));
-                    break;
-                // Add cases for other levels as you implement them
-                default:
-                    Gdx.app.log("LevelSelectionScreen", "Starting level " + level);
-                    // For example: game.setScreen(new GameScreen(game, level));
-                    break;
-            }
+        switch (level) {
+            case 1:
+                game.setScreen(new Story_screen(game));
+                break;
+            case 2:
+                game.setScreen(new level_2(game));
+                break;
+            case 3:
+                game.setScreen(new level_3(game));
+                break;
+
+            default:
+                Gdx.app.log("LevelSelectionScreen", "Starting level " + level);
+                // For example: game.setScreen(new GameScreen(game, level));
+                break;
+        }
 
         // For example: game.setScreen(new GameScreen(game, level));
     }
@@ -123,7 +129,7 @@ public class Level_selection implements Screen {
         // Draw the background
         game.batch.begin();
         game.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        game.batch.draw(select_level, Gdx.graphics.getWidth()/2f - 400f, Gdx.graphics.getHeight() *0.73f,800f, 300f);
+        game.batch.draw(select_level, Gdx.graphics.getWidth() / 2f - 400f, Gdx.graphics.getHeight() * 0.73f, 800f, 300f);
         game.batch.end();
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
@@ -148,10 +154,12 @@ public class Level_selection implements Screen {
     }
 
     @Override
-    public void pause() {}
+    public void pause() {
+    }
 
     @Override
-    public void resume() {}
+    public void resume() {
+    }
 
     @Override
     public void dispose() {

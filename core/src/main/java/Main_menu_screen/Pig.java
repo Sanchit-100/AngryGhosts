@@ -32,7 +32,7 @@ public class Pig {
         // Define the fixture
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
-        fixtureDef.density = 1.0f;
+        fixtureDef.density = 0.3f;
         fixtureDef.friction = 0.1f;
         fixtureDef.restitution = 0.6f; // Bounciness
 

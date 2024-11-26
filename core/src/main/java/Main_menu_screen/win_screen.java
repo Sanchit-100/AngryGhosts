@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 public class win_screen implements Screen {
     private static final float BUTTON_WIDTH_PERCENT = 0.15f;
@@ -33,9 +34,9 @@ public class win_screen implements Screen {
         this.ag = ag;
 
         // Load textures
-        backgroundImage = new Texture("spooky_bg_4.jpg");
+        backgroundImage = new Texture("win_bg.jpg");
         subBackgroundImage = new Texture("sub_bg.png");  // Load sub-background image texture
-        victoryImage = new Texture("victory_new.png");
+        victoryImage = new Texture("victory_symbol.png");
         mainMenuButton = new Texture("home.png");
         restartButton = new Texture("restart.png");
         settingsButton = new Texture("main_menu_icon.png");
@@ -88,6 +89,13 @@ public class win_screen implements Screen {
         // Draw the points image
         ag.batch.draw(pointsImage, worldWidth * 0.17f, worldHeight * 0.65f, 300, 150);  // Adjust position and size as needed
 
+        BitmapFont font = new BitmapFont();
+        font.getData().setScale(3);
+        String victoryText = "VICTORY";
+        float textWidth = font.getRegion().getRegionWidth();
+        float xVictoryText = worldWidth / 2f - textWidth / 2f;
+        float yVictoryText = worldHeight * 0.3f - 50;
+        font.draw(ag.batch, victoryText, xVictoryText, yVictoryText);
         // Draw the buttons horizontally
         ag.batch.draw(mainMenuButton, xMainMenu, 100, buttonWidth, buttonHeight);
         ag.batch.draw(restartButton, xRestart, 100, buttonWidth, buttonHeight);
@@ -124,13 +132,16 @@ public class win_screen implements Screen {
     }
 
     @Override
-    public void pause() {}
+    public void pause() {
+    }
 
     @Override
-    public void resume() {}
+    public void resume() {
+    }
 
     @Override
-    public void hide() {}
+    public void hide() {
+    }
 
     @Override
     public void dispose() {

@@ -12,6 +12,9 @@ public class Pig {
     private Texture texture;
     private Body body;
     private float radius;
+    private int num_of_hits=0;
+    private static final int MAX_HITS = 3;
+
 
     public Pig(World world, Texture texture, Vector2 position, float radius) {
         this.texture = texture;
@@ -43,6 +46,14 @@ public class Pig {
 
         // Dispose the shape after using it
         shape.dispose();
+    }
+
+    public void incrementHits(){
+        num_of_hits++;
+    }
+
+    public boolean isDestroyed(){
+        return num_of_hits>=MAX_HITS;
     }
 
     public Texture getTexture() {

@@ -284,6 +284,13 @@ public class level_1 implements GameLevel,Screen {
             }
         }
         handleInput();
+        pigs.removeIf(pig -> {
+            if ("remove".equals(pig.getBody().getUserData())) {
+                gameWorld.getWorld().destroyBody(pig.getBody());
+                return true;
+            }
+            return false;
+        });
 
 
         if (currentBird != null) {

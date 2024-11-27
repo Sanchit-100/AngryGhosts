@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class level_3 implements Screen,GameLevel {
+public class level_3 implements GameLevel,Screen {
     private int pigsDestroyed = 0;
     private static final float BUTTON_WIDTH_PERCENT = 0.1f;
     private static final float BUTTON_HEIGHT_PERCENT = 0.1f;
@@ -116,8 +116,7 @@ public class level_3 implements Screen,GameLevel {
         pigsDestroyed++;
     }
 
-    @Override
-    public GameWorld getWorld() {
+    public GameWorld getWorld(){
         return gameWorld;
     }
 
@@ -137,17 +136,17 @@ public class level_3 implements Screen,GameLevel {
         birds.add(new Bird(gameWorld.getWorld(), ghostSprites[1], new Vector2(300, groundHeight + 100), 40));
         birds.add(new Bird(gameWorld.getWorld(), ghostSprites[2], new Vector2(350, groundHeight + 100), 40));
         // Create pigs
-        pigs.add(new Pig(gameWorld.getWorld(), pigSprites[0], new Vector2(1100, 430), 40));
-        pigs.add(new Pig(gameWorld.getWorld(), pigSprites[1], new Vector2(1400, 430), 40));
-        pigs.add(new Pig(gameWorld.getWorld(), pigSprites[2], new Vector2(1700, 430), 40));
+        pigs.add(new Pig_1(gameWorld.getWorld(),  1100, 450));
+        pigs.add(new Pig_2(gameWorld.getWorld(),  1400, 450));
+        pigs.add(new Pig_3(gameWorld.getWorld(),  1700, 450));
 
         for (Pig pig : pigs) {
             pig.getBody().getFixtureList().first().setUserData(pig);
         }
-        // Create blocks
-        blocks.add(new Block(gameWorld.getWorld(), glassBlock, new Vector2(1100, 400), 120, 50));
-        blocks.add(new Block(gameWorld.getWorld(), woodenBlock, new Vector2(1400, 400), 120, 50));
-        blocks.add(new Block(gameWorld.getWorld(), glassBlock, new Vector2(1700, 400), 120, 50));
+
+        blocks.add(new Block(gameWorld.getWorld(), glassBlock, new Vector2(1100, 400), 120, 100));
+        blocks.add(new Block(gameWorld.getWorld(), woodenBlock, new Vector2(1400, 400), 120, 70));
+        blocks.add(new Block(gameWorld.getWorld(), glassBlock, new Vector2(1700, 400), 120, 100));
         blocks.add(new Block(gameWorld.getWorld(), groundBlock, new Vector2(950, 80), 2000, 200));
 
         for (Block block : blocks) {
@@ -285,6 +284,13 @@ public class level_3 implements Screen,GameLevel {
             }
         }
         handleInput();
+        pigs.removeIf(pig -> {
+            if ("remove".equals(pig.getBody().getUserData())) {
+                gameWorld.getWorld().destroyBody(pig.getBody());
+                return true;
+            }
+            return false;
+        });
 
 
         if (currentBird != null) {

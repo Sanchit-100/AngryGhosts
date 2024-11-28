@@ -65,9 +65,19 @@ public class LevelState implements Serializable {
         birds = new ArrayList<>();
         for (int i = 0; i < level.birds.size(); i++) {
             Bird bird = level.birds.get(i);
-            // Only add birds that are not marked for removal
             if (!"remove".equals(bird.getBody().getUserData())) {
-                birds.add(new SerializableBird(bird, i));
+                // Find the correct sprite index by comparing the bird's texture
+                int spriteIndex = -1;
+                for (int j = 0; j < level.ghostSprites.length; j++) {
+                    if (bird.getTexture() == level.ghostSprites[j]) {
+                        spriteIndex = j;
+                        break;
+                    }
+                }
+
+                if (spriteIndex != -1) {
+                    birds.add(new SerializableBird(bird, spriteIndex));
+                }
             }
         }
 

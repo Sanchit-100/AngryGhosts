@@ -36,7 +36,7 @@ public class Block {
         fixtureDef.shape = shape;
         fixtureDef.density = 1.0f;
         fixtureDef.friction = 0.1f;
-        fixtureDef.restitution = 0.2f; // Less bounciness
+        fixtureDef.restitution = 0f; // Less bounciness
 
         // Attach the fixture to the body
         body.createFixture(fixtureDef);

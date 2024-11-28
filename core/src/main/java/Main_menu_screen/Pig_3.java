@@ -25,7 +25,7 @@ public class Pig_3 extends Pig {
     @Override
     public FixtureDef getFixtureDef() {
         FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.density = 0.9f;
+        fixtureDef.density = 0.7f;
         fixtureDef.friction = 0.7f;
         fixtureDef.restitution = 0.5f;
 

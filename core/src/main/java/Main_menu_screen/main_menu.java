@@ -12,6 +12,8 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 
+import java.io.File;
+
 public class main_menu implements Screen {
 
     // Button dimensions (now in percentage of screen height)
@@ -101,6 +103,12 @@ public class main_menu implements Screen {
         xHighS = 10;
     }
 
+    private boolean hasSavedGame() {
+        String savePath = System.getProperty("user.dir") + "/level1_save.ser";
+        File saveFile = new File(savePath);
+        return saveFile.exists();
+    }
+
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
@@ -145,9 +153,17 @@ public class main_menu implements Screen {
             } else if (isButtonClicked(touch, xOption, worldHeight * 0.35f)) {
                 this.dispose();
                 ag.setScreen(new options(ag));
-            } else if (isButtonClicked(touch, xContinue, worldHeight * 0.65f)) {
+            } else if (hasSavedGame() && isButtonClicked(touch, xContinue, worldHeight * 0.65f)) {
                 this.dispose();
-                ag.setScreen(new level_1(ag));
+
+                // Create level_1 instance
+                level_1 level = new level_1(ag);
+
+                // Load the saved game state
+                level.loadSavedGame();
+
+                // Set the screen to the loaded level
+                ag.setScreen(level);
             } else if (isButtonClicked(touch, xExit, worldHeight * 0.2f)) {
                 Gdx.app.exit();
             }

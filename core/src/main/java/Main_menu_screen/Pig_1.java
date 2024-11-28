@@ -20,6 +20,7 @@ public class Pig_1 extends Pig {
 
         FixtureDef fixtureDef = getFixtureDef();
         body.createFixture(fixtureDef).setUserData(this);
+        body.setGravityScale(0.5f);
     }
 
     @Override

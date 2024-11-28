@@ -38,8 +38,8 @@ public class Bird {
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
-        fixtureDef.density = 1f; // Lighter weight
-        //fixtureDef.friction = 0.1f; // Reduced friction
+        fixtureDef.density = 5f; // Lighter weight
+        fixtureDef.friction = 0.01f; // Reduced friction
         fixtureDef.restitution = 0.4f; // Moderate bounciness
 
         // Collision filtering
@@ -50,7 +50,7 @@ public class Bird {
 
         // Additional body configuration
         body.setFixedRotation(true);
-        body.setGravityScale(0.3f);
+        body.setGravityScale(0.1f);
         body.setLinearDamping(0.02f);
 
         shape.dispose();

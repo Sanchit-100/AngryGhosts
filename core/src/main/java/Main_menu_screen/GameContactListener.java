@@ -52,17 +52,17 @@ public class GameContactListener implements ContactListener {
         return (userDataA instanceof Pig || userDataB instanceof Pig);
     }
 
-//    private boolean isGroundBlockCollision(Fixture fixtureA, Fixture fixtureB) {
-//        Object userDataA = fixtureA.getUserData();
-//        Object userDataB = fixtureB.getUserData();
-//
-//        if (userDataA == null || userDataB == null) {
-//            return false;
-//        }
-//
-//        return (userDataA instanceof Pig && "groundBlock".equals(userDataB))
-//            || (userDataB instanceof Pig && "groundBlock".equals(userDataA));
-//    }
+    private boolean isGroundBlockCollision(Fixture fixtureA, Fixture fixtureB) {
+        Object userDataA = fixtureA.getUserData();
+        Object userDataB = fixtureB.getUserData();
+
+        if (userDataA == null || userDataB == null) {
+            return false;
+        }
+
+        return (userDataA instanceof Pig && "groundBlock".equals(userDataB))
+            || (userDataB instanceof Pig && "groundBlock".equals(userDataA));
+    }
 
     private boolean isBirdGroundCollision(Fixture fixtureA, Fixture fixtureB) {
         Object userDataA = fixtureA.getUserData();

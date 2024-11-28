@@ -14,12 +14,14 @@ public class Pig_2 extends Pig {
         // Define body and fixture properties
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
+
         bodyDef.position.set(x, y);
 
         body = world.createBody(bodyDef);
 
         FixtureDef fixtureDef = getFixtureDef();
         body.createFixture(fixtureDef).setUserData(this);
+        body.setGravityScale(0.5f);
     }
 
     @Override

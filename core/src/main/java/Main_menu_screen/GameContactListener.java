@@ -4,7 +4,7 @@ import com.badlogic.gdx.physics.box2d.*;
 
 public class GameContactListener implements ContactListener {
     private GameLevel level;
-
+    private java.util.Set<Pig> scoredPigs = new java.util.HashSet<>();
 
     public GameContactListener(GameLevel level) {
         this.level = level;
@@ -20,11 +20,13 @@ public class GameContactListener implements ContactListener {
             Pig pig = (Pig) pigFixture.getUserData();
             pig.incrementHits();
 
-            if (pig.isDestroyed()) {
+            if (pig.isDestroyed() && !scoredPigs.contains(pig)) {
                 pig.getBody().setUserData("remove");  // Mark the pig for removal
+                scoredPigs.add(pig);  // Prevent multiple scoring
                 level.incrementPigsDestroyed();  // Increment pigs destroyed count
             }
         }
+
 
         if (isBirdGroundCollision(fixtureA, fixtureB)) {
             Fixture birdFixture = (fixtureA.getUserData() instanceof Bird) ? fixtureA : fixtureB;

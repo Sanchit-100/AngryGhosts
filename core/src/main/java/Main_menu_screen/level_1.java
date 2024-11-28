@@ -16,6 +16,7 @@ import com.badlogic.gdx.math.Vector3;
 
 import com.badlogic.gdx.math.Vector2;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class level_1 implements GameLevel,Screen {
     private int pigsDestroyed = 0;
     private static final float BUTTON_WIDTH_PERCENT = 0.1f;
     private static final float BUTTON_HEIGHT_PERCENT = 0.1f;
-    private int tries = 0;
+    int tries = 0;
     private static final int MAX_TRIES = 3;
     private float timeSinceLastLaunch = 0;
     private boolean birdLaunched = false;
@@ -43,7 +44,7 @@ public class level_1 implements GameLevel,Screen {
 
     private Texture backgroundImage;
     private Texture slingshotImage;
-    private Texture[] ghostSprites = new Texture[3];
+    Texture[] ghostSprites = new Texture[3];
     private Texture[] pigSprites = new Texture[3];
     private Texture glassBlock;
     private Texture groundBlock;
@@ -59,12 +60,12 @@ public class level_1 implements GameLevel,Screen {
     private float buttonWidth, buttonHeight;
     private float xWin, xLose;
 
-    private GameWorld gameWorld; // Add GameWorld
+    GameWorld gameWorld; // Add GameWorld
     private Box2DDebugRenderer debugRenderer; // Debug renderer for Box2D
 
-    private List<Bird> birds;
-    private List<Pig> pigs;
-    private List<Block> blocks;
+    List<Bird> birds;
+    List<Pig> pigs;
+    List<Block> blocks;
 
     private Bird currentBird;
     private boolean isDragging;
@@ -73,6 +74,7 @@ public class level_1 implements GameLevel,Screen {
 
     public level_1(Angry_ghosts ag) {
         this.ag = ag;
+
 
         // Load textures
         backgroundImage = new Texture("spooky_bg_6.jpg");
@@ -120,12 +122,45 @@ public class level_1 implements GameLevel,Screen {
         return gameWorld;
     }
 
-    private int getScore() {
+    int getScore() {
         return pigsDestroyed * 500;
     }
 
+    public void loadSavedGame() {
+        String savePath = System.getProperty("user.dir") + "/level1_save.ser";
+        File saveFile = new File("level1_save.ser");
 
-    private void initializeGameObjects() {
+        if(saveFile.exists()){
+            try{
+                LevelState savedState = LevelState.loadFromFile(savePath);
+
+                if(savedState != null){
+                    // Clear existing game objects
+                    birds.clear();
+                    pigs.clear();
+                    blocks.clear();
+
+                    // Restore saved state
+                    savedState.restoreState(this);
+
+                    // Restore additional game state
+                    this.tries = savedState.tries;
+
+                    System.out.println("Game state loaded successfully!");
+                }
+            }
+            catch(Exception e){
+                System.err.println("Error loading game state:");
+                e.printStackTrace();
+            }
+        }
+        else{
+            System.out.println("No save file found.");
+        }
+    }
+
+
+    private void initializeGameObjects(){
         birds = new ArrayList<>();
         pigs = new ArrayList<>();
         blocks = new ArrayList<>();
@@ -140,7 +175,7 @@ public class level_1 implements GameLevel,Screen {
         pigs.add(new Pig_2(gameWorld.getWorld(),  1400, 450));
         pigs.add(new Pig_3(gameWorld.getWorld(),  1700, 450));
 
-        for (Pig pig : pigs) {
+        for(Pig pig : pigs){
             pig.getBody().getFixtureList().first().setUserData(pig);
         }
 
@@ -149,21 +184,22 @@ public class level_1 implements GameLevel,Screen {
         blocks.add(new Block(gameWorld.getWorld(), glassBlock, new Vector2(1700, 400), 120, 100));
         blocks.add(new Block(gameWorld.getWorld(), groundBlock, new Vector2(950, 80), 2000, 200));
 
-        for (Block block : blocks) {
-            if (block.getTexture() == groundBlock) {
+        for(Block block : blocks){
+            if(block.getTexture() == groundBlock){
                 block.getBody().getFixtureList().first().setUserData("groundBlock");
-            } else {
+            }
+            else{
                 block.getBody().getFixtureList().first().setUserData("block");
             }
         }
     }
 
     @Override
-    public void show() {
+    public void show(){
         updateButtonPositions();
     }
 
-    private void updateButtonPositions() {
+    private void updateButtonPositions(){
         float worldWidth = viewport.getWorldWidth();
         float worldHeight = viewport.getWorldHeight();
         buttonWidth = worldHeight * BUTTON_WIDTH_PERCENT;
@@ -218,8 +254,8 @@ public class level_1 implements GameLevel,Screen {
             }
         }
 
-        float fixedTimeStep = Math.min(delta, 1 / 60f); // Cap the timestep to prevent jumps
-        gameWorld.getWorld().step(fixedTimeStep * 2, 1, 1);
+        float fixedTimeStep = Math.min(delta, 1 / 90f); // Cap the timestep to prevent jumps
+        gameWorld.getWorld().step(fixedTimeStep * 2, 8, 1);
 
         // Draw the current bird if it has been launched or is being dragged
         if (currentBird != null && birdLaunched) {
@@ -268,7 +304,7 @@ public class level_1 implements GameLevel,Screen {
         // Comment out or remove this line to avoid rendering the debug visuals
         // debugRenderer.render(gameWorld.getWorld(), camera.combined);
 
-        // Handle input
+
         if (Gdx.input.justTouched()) {
             Vector3 touch = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             viewport.unproject(touch);
@@ -412,24 +448,42 @@ public class level_1 implements GameLevel,Screen {
             }
         }
     }
+
     private void checkBirdVelocity() {
         if (currentBird != null && birdLaunched) {
+
+            System.out.println("Bird velocity low, attempting to save state...");
+
+            // Save the game state before switching birds
+
             Vector2 velocity = currentBird.getBody().getLinearVelocity();
 
-            System.out.println("Velocity X: " + velocity.x);
-            System.out.println("Velocity Y: " + velocity.y);
-            System.out.println("Absolute Velocity X: " + Math.abs(velocity.x));
-            System.out.println("Absolute Velocity Y: " + Math.abs(velocity.y));
+
 
             // Check if velocity is very close to zero
             if (Math.abs(velocity.x) < 1f && Math.abs(velocity.y) < 1f) {
-                System.out.println("Bird velocity low, switching bird");
+                // Save the game state before switching birds
+
+                //LevelState currentState = new LevelState(this);
+                //currentState.saveToFile("java/Main_menu_screen/level1_save.ser");
+                currentBird.getBody().setUserData("remove");
 
                 // Remove current bird
                 birds.remove(currentBird);
 
+
+
+
                 // Reset launch states
                 birdLaunched = false;
+                //LevelState currentState = new LevelState(this);
+                //currentState.saveToFile("java/Main_menu_screen/level1_save.ser");
+                System.out.println("Bird velocity low, attempting to save state...");
+
+
+
+                // Save the game state before switching birds
+
 
                 // Increment tries
                 tries++;
@@ -442,6 +496,9 @@ public class level_1 implements GameLevel,Screen {
                     // Check game progression if no birds left
                     checkScoreAndProceed();
                 }
+                LevelState currentState = new LevelState(this);
+                currentState.saveToFile("level1_save.ser");
+
             }
         }
     }

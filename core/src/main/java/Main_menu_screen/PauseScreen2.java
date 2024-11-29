@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.math.Vector3;
 
-public class PauseScreen implements Screen {
+public class PauseScreen2 implements Screen {
     private static final float BUTTON_WIDTH_PERCENT = 0.15f;
     private static final float BUTTON_HEIGHT_PERCENT = 0.15f;
 
@@ -27,7 +27,7 @@ public class PauseScreen implements Screen {
     private float buttonWidth, buttonHeight;
     private float xResume, xRestart, xMainMenu;
 
-    public PauseScreen(Angry_ghosts ag) {
+    public PauseScreen2(Angry_ghosts ag) {
         this.ag = ag;
 
         // Load textures
@@ -91,10 +91,14 @@ public class PauseScreen implements Screen {
             if (isButtonClicked(touch, xResume, worldHeight * 0.5f)) {
                 this.dispose();
 
-                level_1 level1 = new level_1(ag);
-                level1.loadSavedGame();
+                // Create level_1 instance
+                level_2 level2 = new level_2(ag);
 
-                ag.setScreen(level1);
+                // Load the saved game state
+                level2.loadSavedGame();
+
+                // Set the screen to the loaded level
+                ag.setScreen(level2);
             } else if (isButtonClicked(touch, xRestart, worldHeight * 0.35f)) {
                 this.dispose();
                 ag.setScreen(new level_1(ag)); // Restart the level

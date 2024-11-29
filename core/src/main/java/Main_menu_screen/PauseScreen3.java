@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.math.Vector3;
 
-public class PauseScreen implements Screen {
+public class PauseScreen3 implements Screen {
     private static final float BUTTON_WIDTH_PERCENT = 0.15f;
     private static final float BUTTON_HEIGHT_PERCENT = 0.15f;
 
@@ -27,7 +27,7 @@ public class PauseScreen implements Screen {
     private float buttonWidth, buttonHeight;
     private float xResume, xRestart, xMainMenu;
 
-    public PauseScreen(Angry_ghosts ag) {
+    public PauseScreen3(Angry_ghosts ag) {
         this.ag = ag;
 
         // Load textures
@@ -85,20 +85,24 @@ public class PauseScreen implements Screen {
         ag.batch.end();
 
         // Handle input
-        if (Gdx.input.justTouched()) {
+        if(Gdx.input.justTouched()){
             Vector3 touch = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             viewport.unproject(touch);
-            if (isButtonClicked(touch, xResume, worldHeight * 0.5f)) {
+            if(isButtonClicked(touch, xResume, worldHeight * 0.5f)) {
                 this.dispose();
 
-                level_1 level1 = new level_1(ag);
-                level1.loadSavedGame();
+                level_3 level3 = new level_3(ag);
+                level3.loadSavedGame();
 
-                ag.setScreen(level1);
-            } else if (isButtonClicked(touch, xRestart, worldHeight * 0.35f)) {
+                ag.setScreen(level3);
+            }
+
+            else if(isButtonClicked(touch, xRestart, worldHeight * 0.35f)) {
                 this.dispose();
-                ag.setScreen(new level_1(ag)); // Restart the level
-            } else if (isButtonClicked(touch, xMainMenu, worldHeight * 0.2f)) {
+                ag.setScreen(new level_1(ag));
+            }
+
+            else if(isButtonClicked(touch, xMainMenu, worldHeight * 0.2f)) {
                 this.dispose();
                 ag.setScreen(new main_menu(ag));
             }

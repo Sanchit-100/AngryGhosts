@@ -307,7 +307,7 @@ public class level_2 implements GameLevel, Screen {
                 ag.setScreen(new lose_screen(ag, 10000));
             } else if (isButtonClicked(touch, worldWidth * 0.05f, worldHeight * 0.9f)) {
 //                this.dispose();
-                ag.setScreen(new PauseScreen(ag));
+                ag.setScreen(new PauseScreen2(ag));
             }
         }
         handleInput();

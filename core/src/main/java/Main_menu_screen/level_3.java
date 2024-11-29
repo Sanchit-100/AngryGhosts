@@ -140,8 +140,8 @@ public class level_3 implements GameLevel, Screen {
         birds.add(new Bird(gameWorld.getWorld(), ghostSprites[1], new Vector2(300, groundHeight + 100), 40));
         birds.add(new Bird(gameWorld.getWorld(), ghostSprites[2], new Vector2(350, groundHeight + 100), 40));
         // Create pigs
-//        pigs.add(new Pig_1(gameWorld.getWorld(),  1100, 450));
-//        pigs.add(new Pig_2(gameWorld.getWorld(),  1400, 450));
+        pigs.add(new Pig_1(gameWorld.getWorld(),  1300, 500));
+        pigs.add(new Pig_2(gameWorld.getWorld(),  1300, 350));
         pigs.add(new Pig_3(gameWorld.getWorld(),  1300, 800));
 
 
@@ -150,7 +150,7 @@ public class level_3 implements GameLevel, Screen {
         }
 //
 //        blocks.add(new Block(gameWorld.getWorld(), glassBlock, new Vector2(900, 400), 200, 100));
-//        blocks.add(new Block(gameWorld.getWorld(), glassBlock, new Vector2(1500, 400), 200, 100));
+        blocks.add(new Block(gameWorld.getWorld(), glassBlock, new Vector2(1300, 450), 200, 100));
         blocks.add(new Block(gameWorld.getWorld(), groundBlock, new Vector2(950, 80), 4000, 200));
 
         // Obstacle Blocks

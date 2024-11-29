@@ -230,7 +230,8 @@ public class level_3 implements GameLevel, Screen {
 //        this.dispose();
         if (score >= 1500) {
             ag.setScreen(new win_screen(ag, score));
-        } else {
+        }
+        else {
             ag.setScreen(new lose_screen(ag, score));
         }
     }
@@ -325,7 +326,7 @@ public class level_3 implements GameLevel, Screen {
         ag.batch.end();
 
         // Comment out or remove this line to avoid rendering the debug visuals
-        debugRenderer.render(gameWorld.getWorld(), camera.combined);
+        //debugRenderer.render(gameWorld.getWorld(), camera.combined);
 
         // Handle input
         if (Gdx.input.justTouched()) {
@@ -334,10 +335,12 @@ public class level_3 implements GameLevel, Screen {
             if (isButtonClicked(touch, xWin, 50)) {
 //                this.dispose();
                 ag.setScreen(new win_screen(ag, 1000));
-            } else if (isButtonClicked(touch, xLose, 50)) {
+            }
+            else if (isButtonClicked(touch, xLose, 50)) {
 //                this.dispose();
                 ag.setScreen(new lose_screen(ag, 10000));
-            } else if (isButtonClicked(touch, worldWidth * 0.05f, worldHeight * 0.9f)) {
+            }
+            else if (isButtonClicked(touch, worldWidth * 0.05f, worldHeight * 0.9f)) {
 //                this.dispose();
                 ag.setScreen(new PauseScreen(ag));
             }

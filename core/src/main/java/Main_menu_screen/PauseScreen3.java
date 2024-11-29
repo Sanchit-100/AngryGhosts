@@ -99,7 +99,7 @@ public class PauseScreen3 implements Screen {
 
             else if(isButtonClicked(touch, xRestart, worldHeight * 0.35f)) {
                 this.dispose();
-                ag.setScreen(new level_1(ag));
+                ag.setScreen(new level_3(ag));
             }
 
             else if(isButtonClicked(touch, xMainMenu, worldHeight * 0.2f)) {

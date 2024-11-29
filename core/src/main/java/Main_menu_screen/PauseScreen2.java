@@ -101,7 +101,7 @@ public class PauseScreen2 implements Screen {
                 ag.setScreen(level2);
             } else if (isButtonClicked(touch, xRestart, worldHeight * 0.35f)) {
                 this.dispose();
-                ag.setScreen(new level_1(ag)); // Restart the level
+                ag.setScreen(new level_2(ag)); // Restart the level
             } else if (isButtonClicked(touch, xMainMenu, worldHeight * 0.2f)) {
                 this.dispose();
                 ag.setScreen(new main_menu(ag));

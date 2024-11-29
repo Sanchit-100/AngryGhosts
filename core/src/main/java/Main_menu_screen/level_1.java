@@ -68,7 +68,7 @@ public class level_1 implements GameLevel,Screen {
     List<Block> blocks;
     int score;
 
-    private Bird currentBird;
+    Bird currentBird;
     private boolean isDragging;
     private Vector2 slingStart;
     private Vector2 slingEnd;
@@ -213,7 +213,7 @@ public class level_1 implements GameLevel,Screen {
         xLose = worldWidth - buttonWidth;
     }
 
-    private void checkScoreAndProceed() {
+    void checkScoreAndProceed() {
         this.score = getScore();
         //this.dispose();
         if(this.score >= 1500) {

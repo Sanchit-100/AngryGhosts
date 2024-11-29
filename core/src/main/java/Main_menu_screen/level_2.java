@@ -293,7 +293,7 @@ public class level_2 implements GameLevel, Screen {
         ag.batch.end();
 
         // Comment out or remove this line to avoid rendering the debug visuals
-        debugRenderer.render(gameWorld.getWorld(), camera.combined);
+       // debugRenderer.render(gameWorld.getWorld(), camera.combined);
 
         // Handle input
         if (Gdx.input.justTouched()) {
@@ -338,6 +338,7 @@ public class level_2 implements GameLevel, Screen {
         }
         // Update game world
         gameWorld.getWorld().step(delta, 8, 3);
+
     }
 
     private static final float MAX_STRETCH_DISTANCE = 250f;
@@ -508,7 +509,8 @@ public class level_2 implements GameLevel, Screen {
                 // Select next bird if available
                 if (!birds.isEmpty()) {
                     currentBird = birds.get(0);
-                } else {
+                }
+                else {
                     currentBird = null;
                     // Check game progression if no birds left
                     checkScoreAndProceed();

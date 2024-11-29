@@ -135,7 +135,7 @@ public class LevelState2 implements Serializable {
         // Restore birds
         for(SerializableBird serializableBird : birds){
             // Only restore birds that were not destroyed when saved
-            if (!serializableBird.isDestroyed) {
+            if (!serializableBird.isDestroyed){
                 Bird bird = new Bird(level.gameWorld.getWorld(),
                     level.ghostSprites[serializableBird.spriteIndex],
                     serializableBird.position,

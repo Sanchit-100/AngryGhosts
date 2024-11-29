@@ -29,7 +29,7 @@ public class Pig_3 extends Pig{
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.density = 0.7f;
         fixtureDef.friction = 0.7f;
-        fixtureDef.restitution = 0.3f;
+        fixtureDef.restitution = 0.2f;
 
         CircleShape shape = new CircleShape();
         shape.setRadius(15f);

@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class level_3 implements GameLevel,Screen {
+public class level_3 implements GameLevel, Screen {
     private int pigsDestroyed = 0;
     private static final float BUTTON_WIDTH_PERCENT = 0.1f;
     private static final float BUTTON_HEIGHT_PERCENT = 0.1f;
@@ -65,6 +66,7 @@ public class level_3 implements GameLevel,Screen {
     private List<Bird> birds;
     private List<Pig> pigs;
     private List<Block> blocks;
+    private List<Block_obstacle> obstacleBlocks;
 
     private Bird currentBird;
     private boolean isDragging;
@@ -116,7 +118,7 @@ public class level_3 implements GameLevel,Screen {
         pigsDestroyed++;
     }
 
-    public GameWorld getWorld(){
+    public GameWorld getWorld() {
         return gameWorld;
     }
 
@@ -129,6 +131,8 @@ public class level_3 implements GameLevel,Screen {
         birds = new ArrayList<>();
         pigs = new ArrayList<>();
         blocks = new ArrayList<>();
+        obstacleBlocks = new ArrayList<>();
+
 
         // Adjust bird spawn heights
         float groundHeight = 200f; // Adjust based on your ground block positioning
@@ -136,18 +140,25 @@ public class level_3 implements GameLevel,Screen {
         birds.add(new Bird(gameWorld.getWorld(), ghostSprites[1], new Vector2(300, groundHeight + 100), 40));
         birds.add(new Bird(gameWorld.getWorld(), ghostSprites[2], new Vector2(350, groundHeight + 100), 40));
         // Create pigs
-        pigs.add(new Pig_1(gameWorld.getWorld(),  1100, 450));
-        pigs.add(new Pig_2(gameWorld.getWorld(),  1400, 450));
-        pigs.add(new Pig_3(gameWorld.getWorld(),  1700, 450));
+//        pigs.add(new Pig_1(gameWorld.getWorld(),  1100, 450));
+//        pigs.add(new Pig_2(gameWorld.getWorld(),  1400, 450));
+        pigs.add(new Pig_3(gameWorld.getWorld(),  1300, 800));
+
 
         for (Pig pig : pigs) {
             pig.getBody().getFixtureList().first().setUserData(pig);
         }
+//
+//        blocks.add(new Block(gameWorld.getWorld(), glassBlock, new Vector2(900, 400), 200, 100));
+//        blocks.add(new Block(gameWorld.getWorld(), glassBlock, new Vector2(1500, 400), 200, 100));
+        blocks.add(new Block(gameWorld.getWorld(), groundBlock, new Vector2(950, 80), 4000, 200));
 
-        blocks.add(new Block(gameWorld.getWorld(), glassBlock, new Vector2(1100, 400), 120, 100));
-        blocks.add(new Block(gameWorld.getWorld(), woodenBlock, new Vector2(1400, 400), 120, 70));
-        blocks.add(new Block(gameWorld.getWorld(), glassBlock, new Vector2(1700, 400), 120, 100));
-        blocks.add(new Block(gameWorld.getWorld(), groundBlock, new Vector2(950, 80), 2000, 200));
+        // Obstacle Blocks
+//        obstacleBlocks.add(new Block_1(gameWorld.getWorld(),new Vector2(1100,1000),100,100));
+//        obstacleBlocks.add(new Block_1(gameWorld.getWorld(),new Vector2(1100,1000),100,100));
+        obstacleBlocks.add(new Block_2(gameWorld.getWorld(), new Vector2(1400, 400), 30, 400));
+        obstacleBlocks.add(new Block_2(gameWorld.getWorld(),new Vector2(1200,400),30,400));
+        obstacleBlocks.add(new Block_3(gameWorld.getWorld(),new Vector2(1300,600),800,30));
 
         for (Block block : blocks) {
             if (block.getTexture() == groundBlock) {
@@ -155,6 +166,11 @@ public class level_3 implements GameLevel,Screen {
             } else {
                 block.getBody().getFixtureList().first().setUserData("block");
             }
+        }
+        for (Block_obstacle block : obstacleBlocks) {
+
+            block.getBody().getFixtureList().first().setUserData("block_obstacle");
+
         }
     }
 
@@ -201,7 +217,7 @@ public class level_3 implements GameLevel,Screen {
         ag.batch.draw(slingshotImage, slingStart.x, slingStart.y, 150, 250);
 
         // Draw birds
-        if(birdLaunched){
+        if (birdLaunched) {
             checkBirdVelocity();
         }
         for (Bird bird : birds) {
@@ -245,6 +261,12 @@ public class level_3 implements GameLevel,Screen {
             ag.batch.draw(block.getTexture(), position.x - block.getWidth() / 2, position.y - block.getHeight() / 2, block.getWidth(), block.getHeight());
         }
 
+        for (Block_obstacle block : obstacleBlocks) {
+            Vector2 position = block.getBody().getPosition();
+            float angle = block.getBody().getAngle() * MathUtils.radiansToDegrees;
+            ag.batch.draw(block.getTexture(), position.x - block.getWidth() / 2, position.y - block.getHeight() / 2, block.getWidth() / 2, block.getHeight() / 2, block.getWidth(), block.getHeight(), 1f, 1f, angle, 0, 0, block.getTexture().getWidth(), block.getTexture().getHeight(), false, false);
+        }
+
         // Draw the buttons at the bottom right
         ag.batch.draw(winButton, xWin, 50, buttonWidth, buttonHeight);
         ag.batch.draw(loseButton, xLose, 50, buttonWidth, buttonHeight);
@@ -266,7 +288,7 @@ public class level_3 implements GameLevel,Screen {
         ag.batch.end();
 
         // Comment out or remove this line to avoid rendering the debug visuals
-        // debugRenderer.render(gameWorld.getWorld(), camera.combined);
+        debugRenderer.render(gameWorld.getWorld(), camera.combined);
 
         // Handle input
         if (Gdx.input.justTouched()) {
@@ -312,6 +334,7 @@ public class level_3 implements GameLevel,Screen {
         // Update game world
         gameWorld.getWorld().step(delta, 8, 3);
     }
+
     private static final float MAX_STRETCH_DISTANCE = 250f;
     // private static final float LAUNCH_FORCE_MULTIPLIER = 15f;
 
@@ -338,7 +361,7 @@ public class level_3 implements GameLevel,Screen {
             }
 
             if (currentBird != null && isDragging) {
-                // Fixed slingshot center
+
                 Vector2 slingshotCenter = new Vector2(250, 150);
 
                 // Calculate stretch vector
@@ -363,8 +386,7 @@ public class level_3 implements GameLevel,Screen {
                 Body birdBody = currentBird.getBody();
                 birdBody.setTransform(birdPosition, birdBody.getAngle());
             }
-        }
-        else if (isDragging) {
+        } else if (isDragging) {
             // Bird Launch Logic
             if (currentBird != null) {
                 Body birdBody = currentBird.getBody();
@@ -374,16 +396,16 @@ public class level_3 implements GameLevel,Screen {
 
                 // Calculate launch vector
                 Vector2 launchVector = new Vector2(
-                    -10000000000f*(slingshotCenter.x - (birdBody.getPosition().x)),
-                    -10000000000f*(slingshotCenter.y - (birdBody.getPosition().y))
+                    -10000000000f * (slingshotCenter.x - (birdBody.getPosition().x)),
+                    -10000000000f * (slingshotCenter.y - (birdBody.getPosition().y))
                 );
 
                 // Enhanced launch force calculation
                 float stretchDistance = launchVector.len();
-                float launchForce = Math.min(stretchDistance * LAUNCH_FORCE_MULTIPLIER*10000000000000000000000000000000000000f, 20000000000000f);
+                float launchForce = Math.min(stretchDistance * LAUNCH_FORCE_MULTIPLIER * 1e32f * LAUNCH_FORCE_MULTIPLIER, 20000000000000f);
 
                 // Normalize and scale the vector with angle preservation
-                launchVector.nor().scl(launchForce);
+//                launchVector.nor().scl(launchForce);
 
                 System.out.println("Launch Vector: " + launchVector);
                 System.out.println("Launch Force: " + launchForce);
@@ -400,7 +422,6 @@ public class level_3 implements GameLevel,Screen {
                 birdLaunched = true;
 
 
-
                 // Check game progression
                 if (tries >= MAX_TRIES) {
                     checkScoreAndProceed();
@@ -412,6 +433,7 @@ public class level_3 implements GameLevel,Screen {
             }
         }
     }
+
     private void checkBirdVelocity() {
         if (currentBird != null && birdLaunched) {
             Vector2 velocity = currentBird.getBody().getLinearVelocity();

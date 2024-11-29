@@ -16,7 +16,7 @@ public class GameWorld {
         Box2D.init();
 
         // Create a new world with gravity
-        Vector2 gravity = new Vector2(0, -15f); // Gravity pointing down
+        Vector2 gravity = new Vector2(0, -10f);
         world = new World(gravity, true);
 
         createScreenBoundaries();

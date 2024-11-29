@@ -1,13 +1,17 @@
 package Main_menu_screen;
 
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.TimeUtils;
 
 public class GameContactListener implements ContactListener {
     private GameLevel level;
     private java.util.Set<Pig> scoredPigs = new java.util.HashSet<>();
+    private long levelReloadTime;
+    private static final long PIG_IMMUNITY_DURATION = 3000; // 3 seconds of immunity
 
     public GameContactListener(GameLevel level) {
         this.level = level;
+        levelReloadTime = TimeUtils.millis();
     }
 
     @Override
@@ -15,15 +19,20 @@ public class GameContactListener implements ContactListener {
         Fixture fixtureA = contact.getFixtureA();
         Fixture fixtureB = contact.getFixtureB();
 
-        if (isPigCollision(fixtureA, fixtureB)) {
+        if (isPigCollision(fixtureA, fixtureB)){
             Fixture pigFixture = (fixtureA.getUserData() instanceof Pig) ? fixtureA : fixtureB;
             Pig pig = (Pig) pigFixture.getUserData();
-            pig.incrementHits();
 
-            if (pig.isDestroyed() && !scoredPigs.contains(pig)) {
-                pig.getBody().setUserData("remove");  // Mark the pig for removal
-                scoredPigs.add(pig);  // Prevent multiple scoring
-                level.incrementPigsDestroyed();  // Increment pigs destroyed count
+            // Check if we're within the immunity period
+            long currentTime = TimeUtils.millis();
+            if (currentTime - levelReloadTime > PIG_IMMUNITY_DURATION) {
+                pig.incrementHits();
+
+                if (pig.isDestroyed() && !scoredPigs.contains(pig)) {
+                    pig.getBody().setUserData("remove"); // Mark the pig for removal
+                    scoredPigs.add(pig); // Prevent multiple scoring
+                    level.incrementPigsDestroyed(); // Increment pigs destroyed count
+                }
             }
         }
 

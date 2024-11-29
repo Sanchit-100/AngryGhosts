@@ -18,6 +18,9 @@ public abstract class Pig {
     public void incrementHits() {
         num_of_hits++;
     }
+    public int getHits(){
+        return this.num_of_hits;
+    }
 
     public boolean isDestroyed() {
         return num_of_hits >= MAX_HITS;

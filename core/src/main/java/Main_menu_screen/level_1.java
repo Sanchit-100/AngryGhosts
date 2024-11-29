@@ -66,6 +66,7 @@ public class level_1 implements GameLevel,Screen {
     List<Bird> birds;
     List<Pig> pigs;
     List<Block> blocks;
+    int score;
 
     private Bird currentBird;
     private boolean isDragging;
@@ -74,6 +75,7 @@ public class level_1 implements GameLevel,Screen {
 
     public level_1(Angry_ghosts ag) {
         this.ag = ag;
+        //score =0;
 
 
         // Load textures
@@ -92,6 +94,7 @@ public class level_1 implements GameLevel,Screen {
         loseButton = new Texture("lose_icon.png");
         groundBlock = new Texture("ground.jpg");
         shapeRenderer = new ShapeRenderer();
+
 
 
             camera = new OrthographicCamera();
@@ -123,7 +126,8 @@ public class level_1 implements GameLevel,Screen {
     }
 
     int getScore() {
-        return pigsDestroyed * 500;
+        score = pigsDestroyed*500;
+        return score;
     }
 
     public void loadSavedGame() {
@@ -145,6 +149,7 @@ public class level_1 implements GameLevel,Screen {
 
                     // Restore additional game state
                     this.tries = savedState.tries;
+                    //this.score = savedState;
 
                     System.out.println("Game state loaded successfully!");
                 }
@@ -209,11 +214,12 @@ public class level_1 implements GameLevel,Screen {
     }
 
     private void checkScoreAndProceed() {
-        int score = getScore();
-//        this.dispose();
-        if (score >= 1500) {
+        this.score = getScore();
+        //this.dispose();
+        if(this.score >= 1500) {
             ag.setScreen(new win_screen(ag, score));
-        } else {
+        }
+        else{
             ag.setScreen(new lose_screen(ag, score));
         }
     }
@@ -288,7 +294,7 @@ public class level_1 implements GameLevel,Screen {
 
         BitmapFont font = new BitmapFont();
         font.getData().setScale(2);
-        String scoreText = "Score: " + getScore();
+        String scoreText = "Score: " + score;
         font.draw(ag.batch, scoreText, worldWidth - 200, worldHeight - 50);
         if (isDragging && currentBird != null) {
             shapeRenderer.setProjectionMatrix(camera.combined);
@@ -309,13 +315,15 @@ public class level_1 implements GameLevel,Screen {
             Vector3 touch = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             viewport.unproject(touch);
             if (isButtonClicked(touch, xWin, 50)) {
-//                this.dispose();
+    //                this.dispose();
                 ag.setScreen(new win_screen(ag, 1000));
-            } else if (isButtonClicked(touch, xLose, 50)) {
-//                this.dispose();
+            }
+            else if (isButtonClicked(touch, xLose, 50)) {
+    //                this.dispose();
                 ag.setScreen(new lose_screen(ag, 10000));
-            } else if (isButtonClicked(touch, worldWidth * 0.05f, worldHeight * 0.9f)) {
-//                this.dispose();
+            }
+            else if (isButtonClicked(touch, worldWidth * 0.05f, worldHeight * 0.9f)) {
+    //                this.dispose();
                 ag.setScreen(new PauseScreen(ag));
             }
         }
@@ -350,7 +358,9 @@ public class level_1 implements GameLevel,Screen {
     }
     private static final float MAX_STRETCH_DISTANCE = 250f;
    // private static final float LAUNCH_FORCE_MULTIPLIER = 15f;
-
+   public void setScore(int newScore) {
+       this.score = newScore;
+   }
 
     private void handleInput() {
         if (Gdx.input.isTouched()) {
@@ -459,7 +469,6 @@ public class level_1 implements GameLevel,Screen {
             Vector2 velocity = currentBird.getBody().getLinearVelocity();
 
 
-
             // Check if velocity is very close to zero
             if (Math.abs(velocity.x) < 1f && Math.abs(velocity.y) < 1f) {
                 // Save the game state before switching birds
@@ -471,17 +480,11 @@ public class level_1 implements GameLevel,Screen {
                 // Remove current bird
                 birds.remove(currentBird);
 
-
-
-
                 // Reset launch states
                 birdLaunched = false;
                 //LevelState currentState = new LevelState(this);
                 //currentState.saveToFile("java/Main_menu_screen/level1_save.ser");
                 System.out.println("Bird velocity low, attempting to save state...");
-
-
-
                 // Save the game state before switching birds
 
 

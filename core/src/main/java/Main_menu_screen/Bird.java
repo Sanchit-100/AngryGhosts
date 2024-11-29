@@ -50,7 +50,7 @@ public class Bird {
 
         // Additional body configuration
         body.setFixedRotation(true);
-        body.setGravityScale(0.1f);
+        body.setGravityScale(0.3f);
         body.setLinearDamping(0.02f);
 
         shape.dispose();

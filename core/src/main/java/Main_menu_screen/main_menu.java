@@ -150,10 +150,12 @@ public class main_menu implements Screen {
             if (isButtonClicked(touch, xPlay, worldHeight * 0.5f)) {
                 this.dispose();
                 ag.setScreen(new Level_selection(ag));
-            } else if (isButtonClicked(touch, xOption, worldHeight * 0.35f)) {
+            }
+            else if (isButtonClicked(touch, xOption, worldHeight * 0.35f)) {
                 this.dispose();
                 ag.setScreen(new options(ag));
-            } else if (hasSavedGame() && isButtonClicked(touch, xContinue, worldHeight * 0.65f)) {
+            }
+            else if (hasSavedGame() && isButtonClicked(touch, xContinue, worldHeight * 0.65f)) {
                 this.dispose();
 
                 // Create level_1 instance
@@ -164,7 +166,8 @@ public class main_menu implements Screen {
 
                 // Set the screen to the loaded level
                 ag.setScreen(level);
-            } else if (isButtonClicked(touch, xExit, worldHeight * 0.2f)) {
+            }
+            else if (isButtonClicked(touch, xExit, worldHeight * 0.2f)) {
                 Gdx.app.exit();
             }
             else if(isProfileClicked(touch, worldWidth -400f,worldHeight*0.75f)){

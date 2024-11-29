@@ -444,7 +444,7 @@ public class level_2 implements GameLevel, Screen {
             System.out.println("Absolute Velocity Y: " + Math.abs(velocity.y));
 
             // Check if velocity is very close to zero
-            if (Math.abs(velocity.x) < 1f && Math.abs(velocity.y) < 1f) {
+            if(Math.abs(velocity.x) < 1f && Math.abs(velocity.y) < 1f){
                 System.out.println("Bird velocity low, switching bird");
 
                 // Remove current bird
@@ -457,9 +457,10 @@ public class level_2 implements GameLevel, Screen {
                 tries++;
 
                 // Select next bird if available
-                if (!birds.isEmpty()) {
+                if(!birds.isEmpty()){
                     currentBird = birds.get(0);
-                } else {
+                }
+                else{
                     currentBird = null;
                     // Check game progression if no birds left
                     checkScoreAndProceed();

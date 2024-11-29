@@ -57,8 +57,9 @@ public class LevelState implements Serializable {
     public List<SerializableBird> birds;
     public List<SerializablePig> pigs;
     public List<SerializableBlock> blocks;
-    public int score;
+    //public int score;
     public int tries;
+    public int score;
 
     public LevelState(level_1 level) {
         // Capture only non-destroyed birds
@@ -96,6 +97,7 @@ public class LevelState implements Serializable {
         }
 
         score = level.getScore();
+        System.out.println("GGGET LEVEL SCORE GIVES"+score);
         tries = level.tries;
     }
 
@@ -181,7 +183,8 @@ public class LevelState implements Serializable {
                     serializableBlock.position,
                     2000,  //specific ground block width
                     200);  //specific ground block height
-            } else {
+            }
+            else{
                 block = new Block(level.gameWorld.getWorld(),
                     blockTexture,
                     serializableBlock.position,
@@ -193,5 +196,7 @@ public class LevelState implements Serializable {
 
         // Restore additional game state
         level.tries = tries;
+        level.setScore(score);
+
     }
 }

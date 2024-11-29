@@ -12,7 +12,7 @@ import java.util.List;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 
-public class LevelState implements Serializable {
+public class LevelState3 implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public static class SerializableBird implements Serializable {
@@ -61,7 +61,7 @@ public class LevelState implements Serializable {
     public int tries;
     public int score;
 
-    public LevelState(level_1 level) {
+    public LevelState3(level_3 level) {
         // Capture only non-destroyed birds
         birds = new ArrayList<>();
         for (int i = 0; i < level.birds.size(); i++) {
@@ -114,10 +114,10 @@ public class LevelState implements Serializable {
     }
 
     // Load method
-    public static LevelState loadFromFile(String filename) {
+    public static LevelState3 loadFromFile(String filename) {
         try (FileInputStream fileIn = new FileInputStream(filename);
              ObjectInputStream in = new ObjectInputStream(fileIn)) {
-            return (LevelState) in.readObject();
+            return (LevelState3) in.readObject();
         }
         catch (IOException | ClassNotFoundException e) {
             System.err.println("Error loading game state: " + e.getMessage());
@@ -126,7 +126,7 @@ public class LevelState implements Serializable {
     }
 
     //Method to restore game state
-    public void restoreState(level_1 level) {
+    public void restoreState(level_3 level) {
         // Clear existing game objects
         level.birds.clear();
         level.pigs.clear();

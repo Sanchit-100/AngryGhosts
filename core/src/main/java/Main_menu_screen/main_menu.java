@@ -157,15 +157,7 @@ public class main_menu implements Screen {
             }
             else if (hasSavedGame() && isButtonClicked(touch, xContinue, worldHeight * 0.65f)) {
                 this.dispose();
-
-                // Create level_1 instance
-                level_1 level = new level_1(ag);
-
-                // Load the saved game state
-                level.loadSavedGame();
-
-                // Set the screen to the loaded level
-                ag.setScreen(level);
+                ag.setScreen(new Level_selection_load(ag));
             }
             else if (isButtonClicked(touch, xExit, worldHeight * 0.2f)) {
                 Gdx.app.exit();

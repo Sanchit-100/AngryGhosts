@@ -17,6 +17,7 @@ import com.badlogic.gdx.math.Vector3;
 
 import com.badlogic.gdx.math.Vector2;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class level_2 implements GameLevel, Screen {
     private int pigsDestroyed = 0;
     private static final float BUTTON_WIDTH_PERCENT = 0.1f;
     private static final float BUTTON_HEIGHT_PERCENT = 0.1f;
-    private int tries = 0;
+    int tries = 0;
     private static final int MAX_TRIES = 3;
     private float timeSinceLastLaunch = 0;
     private boolean birdLaunched = false;
@@ -44,7 +45,7 @@ public class level_2 implements GameLevel, Screen {
 
     private Texture backgroundImage;
     private Texture slingshotImage;
-    private Texture[] ghostSprites = new Texture[3];
+    Texture[] ghostSprites = new Texture[3];
     private Texture[] pigSprites = new Texture[3];
     private Texture glassBlock;
     private Texture groundBlock;
@@ -60,18 +61,19 @@ public class level_2 implements GameLevel, Screen {
     private float buttonWidth, buttonHeight;
     private float xWin, xLose;
 
-    private GameWorld gameWorld; // Add GameWorld
+    GameWorld gameWorld; // Add GameWorld
     private Box2DDebugRenderer debugRenderer; // Debug renderer for Box2D
 
-    private List<Bird> birds;
-    private List<Pig> pigs;
-    private List<Block> blocks;
+    List<Bird> birds;
+    List<Pig> pigs;
+    List<Block> blocks;
     private List<Block_obstacle> obstacleBlocks;
 
     private Bird currentBird;
     private boolean isDragging;
     private Vector2 slingStart;
     private Vector2 slingEnd;
+    int score;
 
     public level_2(Angry_ghosts ag) {
         this.ag = ag;
@@ -107,6 +109,7 @@ public class level_2 implements GameLevel, Screen {
 
         // Initialize game objects
         initializeGameObjects();
+        score =0;
 
         // Initialize slingshot positions
         slingStart = new Vector2(250, 150);  // Position of the slingshot
@@ -122,9 +125,11 @@ public class level_2 implements GameLevel, Screen {
         return gameWorld;
     }
 
-    private int getScore() {
-        return pigsDestroyed * 500;
+    int getScore() {
+        score = pigsDestroyed*500;
+        return score;
     }
+
 
 
     private void initializeGameObjects() {
@@ -274,7 +279,7 @@ public class level_2 implements GameLevel, Screen {
 
         BitmapFont font = new BitmapFont();
         font.getData().setScale(2);
-        String scoreText = "Score: " + getScore();
+        String scoreText = "Score: " + score;
         font.draw(ag.batch, scoreText, worldWidth - 200, worldHeight - 50);
         if (isDragging && currentBird != null) {
             shapeRenderer.setProjectionMatrix(camera.combined);
@@ -337,6 +342,44 @@ public class level_2 implements GameLevel, Screen {
 
     private static final float MAX_STRETCH_DISTANCE = 250f;
     // private static final float LAUNCH_FORCE_MULTIPLIER = 15f;
+
+    public void setScore(int newScore) {
+        this.score = newScore;
+    }
+
+    public void loadSavedGame() {
+        String savePath = System.getProperty("user.dir") + "/level2_save.ser";
+        File saveFile = new File("level2_save.ser");
+
+        if(saveFile.exists()){
+            try{
+                LevelState2 savedState = LevelState2.loadFromFile(savePath);
+
+                if(savedState != null){
+                    // Clear existing game objects
+                    birds.clear();
+                    pigs.clear();
+                    blocks.clear();
+
+                    // Restore saved state
+                    savedState.restoreState(this);
+
+                    // Restore additional game state
+                    this.tries = savedState.tries;
+                    //this.score = savedState;
+
+                    System.out.println("Game state loaded successfully!");
+                }
+            }
+            catch(Exception e){
+                System.err.println("Error loading game state:");
+                e.printStackTrace();
+            }
+        }
+        else{
+            System.out.println("No save file found.");
+        }
+    }
 
 
     private void handleInput() {
@@ -445,26 +488,33 @@ public class level_2 implements GameLevel, Screen {
 
             // Check if velocity is very close to zero
             if(Math.abs(velocity.x) < 1f && Math.abs(velocity.y) < 1f){
-                System.out.println("Bird velocity low, switching bird");
+                //currentState.saveToFile("java/Main_menu_screen/level1_save.ser");
+                currentBird.getBody().setUserData("remove");
 
                 // Remove current bird
                 birds.remove(currentBird);
 
                 // Reset launch states
                 birdLaunched = false;
+                //LevelState currentState = new LevelState(this);
+                //currentState.saveToFile("java/Main_menu_screen/level1_save.ser");
+                System.out.println("Bird velocity low, attempting to save state...");
+                // Save the game state before switching birds
+
 
                 // Increment tries
                 tries++;
 
                 // Select next bird if available
-                if(!birds.isEmpty()){
+                if (!birds.isEmpty()) {
                     currentBird = birds.get(0);
-                }
-                else{
+                } else {
                     currentBird = null;
                     // Check game progression if no birds left
                     checkScoreAndProceed();
                 }
+                LevelState2 currentState = new LevelState2(this);
+                currentState.saveToFile("level2_save.ser");
             }
         }
     }

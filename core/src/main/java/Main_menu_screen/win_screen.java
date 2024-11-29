@@ -30,7 +30,7 @@ public class win_screen implements Screen {
     private float buttonWidth, buttonHeight;
     private float xMainMenu, xRestart, xSettings;
 
-    public win_screen(Angry_ghosts ag, int points) {
+    public win_screen(Angry_ghosts ag, int points){
         this.ag = ag;
 
         // Load textures
@@ -115,12 +115,12 @@ public class win_screen implements Screen {
                 ag.setScreen(new level_1(ag)); // You can restart the level here
             } else if (isButtonClicked(touch, xSettings, 100)) {
                 this.dispose();
-                ag.setScreen(new Level_selection(ag)); // Open settings screen
+                ag.setScreen(new Level_selection(ag));
             }
         }
     }
 
-    private boolean isButtonClicked(Vector3 touch, float x, float y) {
+    private boolean isButtonClicked(Vector3 touch, float x, float y){
         return touch.x >= x && touch.x <= x + buttonWidth && touch.y >= y && touch.y <= y + buttonHeight;
     }
 
@@ -136,15 +136,15 @@ public class win_screen implements Screen {
     }
 
     @Override
-    public void resume() {
+    public void resume(){
     }
 
     @Override
-    public void hide() {
+    public void hide(){
     }
 
     @Override
-    public void dispose() {
+    public void dispose(){
         backgroundImage.dispose();
         subBackgroundImage.dispose();
         victoryImage.dispose();

@@ -215,14 +215,18 @@ public class level_1 implements GameLevel,Screen {
 
     void checkScoreAndProceed() {
         this.score = getScore();
-        //this.dispose();
-        if(this.score >= 1500) {
+
+        // Check if all pigs are destroyed
+        boolean allPigsDestroyed = pigs.isEmpty();
+
+        // Check if score meets the threshold and all pigs are destroyed
+        if (this.score >= 1500 && allPigsDestroyed) {
             ag.setScreen(new win_screen(ag, score));
-        }
-        else{
+        } else if (tries >= MAX_TRIES || birds.isEmpty()) {
             ag.setScreen(new lose_screen(ag, score));
         }
     }
+
 
 
     @Override
@@ -448,9 +452,9 @@ public class level_1 implements GameLevel,Screen {
 
 
                 // Check game progression
-                if (tries >= MAX_TRIES) {
-                    checkScoreAndProceed();
-                }
+
+
+
                 if (birdLaunched) {
                     checkBirdStop = true;
                     stationaryTime = 0f;
@@ -490,6 +494,8 @@ public class level_1 implements GameLevel,Screen {
 
                 // Increment tries
                 tries++;
+                checkScoreAndProceed();
+
 
                 // Select next bird if available
                 if (!birds.isEmpty()) {
@@ -497,7 +503,7 @@ public class level_1 implements GameLevel,Screen {
                 } else {
                     currentBird = null;
                     // Check game progression if no birds left
-                    checkScoreAndProceed();
+
                 }
                 LevelState currentState = new LevelState(this);
                 currentState.saveToFile("level1_save.ser");

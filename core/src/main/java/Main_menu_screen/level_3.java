@@ -225,13 +225,16 @@ public class level_3 implements GameLevel, Screen {
         xLose = worldWidth - buttonWidth;
     }
 
-    private void checkScoreAndProceed() {
+    void checkScoreAndProceed() {
         this.score = getScore();
-//        this.dispose();
-        if (score >= 1500) {
+
+        // Check if all pigs are destroyed
+        boolean allPigsDestroyed = pigs.isEmpty();
+
+        // Check if score meets the threshold and all pigs are destroyed
+        if (this.score >= 1500 && allPigsDestroyed) {
             ag.setScreen(new win_screen(ag, score));
-        }
-        else {
+        } else if (tries >= MAX_TRIES || birds.isEmpty()) {
             ag.setScreen(new lose_screen(ag, score));
         }
     }
@@ -463,9 +466,6 @@ public class level_3 implements GameLevel, Screen {
 
 
                 // Check game progression
-                if (tries >= MAX_TRIES) {
-                    checkScoreAndProceed();
-                }
                 if (birdLaunched) {
                     checkBirdStop = true;
                     stationaryTime = 0f;
@@ -504,6 +504,7 @@ public class level_3 implements GameLevel, Screen {
 
                 // Increment tries
                 tries++;
+                checkScoreAndProceed();
 
                 // Select next bird if available
                 if (!birds.isEmpty()) {
@@ -511,7 +512,7 @@ public class level_3 implements GameLevel, Screen {
                 } else {
                     currentBird = null;
                     // Check game progression if no birds left
-                    checkScoreAndProceed();
+
                 }
                 LevelState3 currentState = new LevelState3(this);
                 currentState.saveToFile("level3_save.ser");

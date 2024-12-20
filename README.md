@@ -1,11 +1,22 @@
-## Game Overview
+# Angry Birds Dead Hour
+![main_screen](assets/main_screen.png)
 
-**Angry Birds Dead Hour** is an exciting twist on the classic Angry Birds saga. In this version, the Angry Birds have come back as ghosts to seek revenge on the pigs who wronged them. With a haunting new atmosphere, players must control these ghostly birds to overcome obstacles, defeat enemies, and bring peace back to their realm. The pigs are in for the fright of their lives as they attempt to defend themselves from these otherworldly attackers!
-## Features
+**Angry Birds Dead Hour** is a **HORROR** adaptation of the classic Angry Birds saga. In this version, the Angry Birds have come back as ghosts to seek revenge on the pigs who wronged them. With a haunting new atmosphere, players must control these ghostly birds to overcome obstacles, defeat enemies, and bring peace back to their realm. The pigs are in for the fright of their lives as they attempt to defend themselves from these otherworldly attackers!
+:star:**Please star the repository if you happen to like the project**
 
-Haunting Gameplay: Control the ghostly Angry Birds in thrilling physics-based levels.
-Battle Against Pigs: Use strategic aim and ghostly powers to topple the pigs’ defenses.
-Win/Loss Simulation: For testing purposes, you can manually simulate a win or loss by selecting the thumbs up or thumbs down buttons on the Level 1 screen.
+## Gameplay
+The users are greeted with a narrated story screen on Level-1.
+![](assets/story.png)
+
+They further have the options to play one of three-levels, each with different structures.
+There are three types of pigs and three types of birds.
+
+![](assets/level_Screen.png)
+![](assets/level3.png)
+
+The aim is to destroy all the birds and gain >=1500 score for winning the level. Accordingly, the defeat and victory screens are displayed.
+![](assets/victory.png)
+![](assets/defeat.png)
 
 ## How to Run the Game
 

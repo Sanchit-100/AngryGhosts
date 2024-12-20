@@ -1,12 +1,10 @@
 ## Game Overview
 
-Angry Birds Dead Hour is an exciting twist on the classic Angry Birds saga. In this version, the Angry Birds have come back as ghosts to seek revenge on the pigs who wronged them. With a haunting new atmosphere, players must control these ghostly birds to overcome obstacles, defeat enemies, and bring peace back to their realm. The pigs are in for the fright of their lives as they attempt to defend themselves from these otherworldly attackers!
+**Angry Birds Dead Hour** is an exciting twist on the classic Angry Birds saga. In this version, the Angry Birds have come back as ghosts to seek revenge on the pigs who wronged them. With a haunting new atmosphere, players must control these ghostly birds to overcome obstacles, defeat enemies, and bring peace back to their realm. The pigs are in for the fright of their lives as they attempt to defend themselves from these otherworldly attackers!
 ## Features
 
 Haunting Gameplay: Control the ghostly Angry Birds in thrilling physics-based levels.
-
 Battle Against Pigs: Use strategic aim and ghostly powers to topple the pigs’ defenses.
-
 Win/Loss Simulation: For testing purposes, you can manually simulate a win or loss by selecting the thumbs up or thumbs down buttons on the Level 1 screen.
 
 ## How to Run the Game
@@ -25,6 +23,7 @@ Note: This will launch the game’s main screen, where you can navigate through 
 
 ## Gameplay Instructions
 
+![defeat](assets/defeat.png)
 Level 1: Once you reach the Level 1 screen, you can begin strategizing your attacks to take down the pigs.
 
 Simulating Wins and Losses:

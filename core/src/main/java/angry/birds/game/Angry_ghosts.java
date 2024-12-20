@@ -18,14 +18,11 @@ public class Angry_ghosts extends Game {
     public void create() {
         batch = new SpriteBatch();
 
-        // Get the display mode of the primary monitor
-        DisplayMode displayMode = Gdx.graphics.getDisplayMode();
+        // Set the game to windowed mode with specific dimensions (e.g., 800x600)
+        Gdx.graphics.setWindowedMode(2000, 1200);
 
-        // Set the game to fullscreen
-        Gdx.graphics.setFullscreenMode(displayMode);
-
-        // Create a viewport that fits the screen size
-        viewport = new FitViewport(displayMode.width, displayMode.height);
+        // Create a viewport that fits the window size
+        viewport = new FitViewport(2000, 1200);
 
         this.setScreen(new main_menu(this));
     }

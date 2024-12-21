@@ -9,7 +9,7 @@
 
 - [Tech Stack](#tech-stack)
 - [Salient Features](#salient-features)
-- [Visuals and Gameplay](#visuals-and-gameplay)
+- [Visuals and Gameplay](#visuals--gameplay)
 - [How to Run the Game](#how-to-run-the-game)
 - [Designs](#designs)
 - [License](#license)

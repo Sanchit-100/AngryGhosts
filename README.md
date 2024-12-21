@@ -48,10 +48,16 @@ The aim is to destroy all the birds and gain >=1500 score for winning the level.
 
 ## How to Run the Game
 
-If you want to just play the game, you can simply download the ZIP file or the JAR file from the release section.
-If you want to play around the code, you can follow the below steps:-
-1. Clone the repo
-2. Go to lwjgl3/src/main/java/angry/birds/game/lwjgl3/Lwjgl3Launcher.java and simply run the Launcher file.
+If you want to **just play the game**, you can simply download the **ZIP file** or the **JAR file** from the release section.
+1. **JAR file**: For those who have a compatible Java Runtime installed on their system.
+2. **ZIP file** (Recommended by the authors): The recommended method is to Simply download the ZIP file, extract it and go to the below file:-
+`angry_birds_by_nerds-winX64\angry_birds_by_nerds-1.0.0-winX64\angry_birds_by_nerds.exe`
+Now, run the executable file. No other dependency required. Just like that.
+
+If you want to **play around the code, (for nerds)**, you can follow the below steps:-
+1. Clone the repo 
+   `git clone https://github.com/Sanchit-100/AngryGhosts.git`
+2. Go to `lwjgl3/src/main/java/angry/birds/game/lwjgl3/Lwjgl3Launcher.java` and simply run the Launcher file.
 3. Enjoy the game.
 
 ## Designs 

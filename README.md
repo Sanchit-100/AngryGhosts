@@ -1,9 +1,20 @@
 # Angry Birds Dead Hour
 ![main_screen](assets/main_screen.png)
 
-**Angry Birds Dead Hour** is a **HORROR** adaptation of the classic Angry Birds saga. In this version, the Angry Birds have come back as ghosts to seek revenge on the pigs who wronged them. With a haunting new atmosphere, players must control these ghostly birds to overcome obstacles, defeat enemies, and bring peace back to their realm. The pigs are in for the fright of their lives as they attempt to defend themselves from these otherworldly attackers!
 :star:**Please star the repository if you happen to like the project**
 
+**Angry Birds Dead Hour** is a **HORROR** adaptation of the classic Angry Birds saga. In this version, the Angry Birds have come back as ghosts to seek revenge on the pigs who wronged them. With a haunting new atmosphere, players must control these ghostly birds to overcome obstacles, defeat enemies, and bring peace back to their realm. The pigs are in for the fright of their lives as they attempt to defend themselves from these otherworldly attackers!
+
+## Table of Contents
+
+- [Tech Stack](#tech-stack)
+- [Salient Features](#salient-features)
+- [Visuals and Gameplay](#visuals-and-gameplay)
+- [How to Run the Game](#how-to-run-the-game)
+- [Designs](#designs)
+- [License](#license)
+- [Creators](#creators)
+  
 ## 💻 Tech Stack
 
 - Java

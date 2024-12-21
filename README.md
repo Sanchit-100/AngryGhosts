@@ -9,13 +9,13 @@
 
 - [Tech Stack](#tech-stack)
 - [Salient Features](#salient-features)
-- [Visuals and Gameplay](#visuals--gameplay)
+- [Visuals and Gameplay](#visuals-and-gameplay)
 - [How to Run the Game](#how-to-run-the-game)
 - [Designs](#designs)
 - [License](#license)
 - [Creators](#creators)
   
-## 💻 Tech Stack
+## 💻Tech Stack
 
 - Java
 - LibGDX
@@ -31,7 +31,7 @@
 - Choice between 3 kinds of birds
 - Used Box2d to implement the physics world of the game
 
-## 👀 Visuals and Gameplay
+## 👀Visuals and Gameplay
 
 The users are greeted with a narrated story screen on Level-1.
 ![](assets/story.png)

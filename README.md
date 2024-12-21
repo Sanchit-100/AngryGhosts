@@ -45,13 +45,14 @@ If you want to play around the code, you can follow the below steps:-
 
 ## Designs 
 
+You can also find the pdfs of these in the assets folder.
 UML Diagram -
 
-![UML](assets/UML_Diagram.pdf)
+![UML](assets/UML_Diagram.png)
 
 Use Case Diagram - 
 
-![UseCase](assets/UseCase.pdf)
+![UseCase](assets/UseCase.png)
 
 ## License
 Angry Birds Dead Hour is developed as a fan-based project and is not officially associated with the original Angry Birds series by Rovio Entertainment. This project is intended for educational and personal entertainment purposes only. This is licensed under the MIT license.

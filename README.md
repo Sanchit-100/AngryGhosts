@@ -33,6 +33,8 @@
 - Used Box2d to implement the physics world of the game
 
 ## Demo Video
+Click on the below picture to redirect to the YouTube link.
+
 [![Watch the video](https://img.youtube.com/vi/3QR2ExcxttY/0.jpg)](https://www.youtube.com/watch?v=3QR2ExcxttY)
 
 ## 👀Visuals and Gameplay

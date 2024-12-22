@@ -9,6 +9,7 @@
 
 - [Tech Stack](#tech-stack)
 - [Salient Features](#salient-features)
+- [Demo Video](#demo-video)
 - [Visuals and Gameplay](#visuals-and-gameplay)
 - [How to Run the Game](#how-to-run-the-game)
 - [Designs](#designs)
@@ -30,6 +31,9 @@
 - 3 kinds of pigs
 - Choice between 3 kinds of birds
 - Used Box2d to implement the physics world of the game
+
+## Demo Video
+[![Watch the video](https://img.youtube.com/vi/3QR2ExcxttY/0.jpg)](https://www.youtube.com/watch?v=3QR2ExcxttY)
 
 ## 👀Visuals and Gameplay
 
